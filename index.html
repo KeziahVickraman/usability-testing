@@ -43,7 +43,7 @@
     header p {
       color: var(--muted);
       font-size: 1rem;
-      max-width: 520px;
+      max-width: 600px;
       margin: 0 auto;
       line-height: 1.6;
     }
@@ -56,12 +56,33 @@
       width: 100%;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
+    /* ── ROW SECTION ── */
+    .proto-section {
+      margin-bottom: 3.5rem;
     }
 
+    .proto-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    /* ── CARDS ── */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -84,9 +105,9 @@
       outline-offset: 2px;
     }
 
-    .card--sia:hover  { border-color: var(--accent-sia); box-shadow: 0 16px 40px rgba(0,32,91,0.4); }
+    .card--sia:hover     { border-color: var(--accent-sia);     box-shadow: 0 16px 40px rgba(0,32,91,0.4); }
     .card--netflix:hover { border-color: var(--accent-netflix); box-shadow: 0 16px 40px rgba(229,9,20,0.3); }
-    .card--amazon:hover  { border-color: var(--accent-amazon); box-shadow: 0 16px 40px rgba(255,153,0,0.3); }
+    .card--amazon:hover  { border-color: var(--accent-amazon);  box-shadow: 0 16px 40px rgba(255,153,0,0.3); }
 
     .card__thumb {
       height: 180px;
@@ -178,6 +199,49 @@
       margin-top: 0.25rem;
     }
 
+    /* ── PLACEHOLDER CARD ── */
+    .card--placeholder {
+      border-style: dashed;
+      border-color: #3a3d4e;
+      opacity: 0.65;
+      pointer-events: none;
+    }
+
+    .card--placeholder .card__thumb {
+      opacity: 0.45;
+    }
+
+    .card--placeholder .card__label {
+      color: var(--muted) !important;
+    }
+
+    .card--placeholder .card__title {
+      color: #c0c3d4;
+    }
+
+    .card--placeholder .card__cta {
+      background: #2a2d3a;
+      color: var(--muted);
+      cursor: not-allowed;
+    }
+
+    .badge-v2 {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid #3a3d4e;
+      border-radius: 4px;
+      padding: 0.2em 0.55em;
+      margin-bottom: 0.25rem;
+      align-self: flex-start;
+    }
+
     footer {
       padding: 2rem;
       text-align: center;
@@ -186,8 +250,8 @@
       font-size: 0.8rem;
     }
 
-    @media (max-width: 480px) {
-      .grid { grid-template-columns: 1fr; }
+    @media (max-width: 640px) {
+      .row { grid-template-columns: 1fr; }
       .card__thumb { height: 140px; }
     }
   </style>
@@ -196,58 +260,113 @@
 
 <header>
   <h1>Usability Testing Prototypes</h1>
-  <p>Three high-fidelity interface prototypes for usability research. Each prototype is standalone and interactive.</p>
+  <p>An iterative usability study comparing original interface replicas with revised versions informed by classmate feedback. Each row shows the current replica alongside its upcoming revised counterpart.</p>
 </header>
 
 <main>
-  <div class="grid">
 
-    <a href="singapore-airlines.html" class="card card--sia">
-      <div class="card__thumb">SIA</div>
-      <div class="card__body">
-        <span class="card__label">Prototype 01 &mdash; Travel</span>
-        <h2 class="card__title">Singapore Airlines</h2>
-        <p class="card__desc">Flight booking flow with nav, booking widget, destination inspiration cards, and miles promotions.</p>
-        <div>
-          <span class="tag">Booking Flow</span>
-          <span class="tag">Date Picker</span>
-          <span class="tag">Cabin Class</span>
+  <!-- ── ROW 1: SINGAPORE AIRLINES ── -->
+  <section class="proto-section">
+    <p class="section-label">01 &mdash; Singapore Airlines</p>
+    <div class="row">
+
+      <a href="singapore-airlines.html" class="card card--sia">
+        <div class="card__thumb">SIA</div>
+        <div class="card__body">
+          <span class="card__label">Current Replica &mdash; Travel</span>
+          <h2 class="card__title">Singapore Airlines</h2>
+          <p class="card__desc">Flight booking flow with nav, booking widget, destination inspiration cards, and miles promotions.</p>
+          <div>
+            <span class="tag">Booking Flow</span>
+            <span class="tag">Date Picker</span>
+            <span class="tag">Cabin Class</span>
+          </div>
+          <span class="card__cta">Open prototype &rarr;</span>
         </div>
-        <span class="card__cta">Open prototype &rarr;</span>
-      </div>
-    </a>
+      </a>
 
-    <a href="netflix-sg.html" class="card card--netflix">
-      <div class="card__thumb">N</div>
-      <div class="card__body">
-        <span class="card__label">Prototype 02 &mdash; Streaming</span>
-        <h2 class="card__title">Netflix Singapore</h2>
-        <p class="card__desc">Logged-in browse homepage with hero banner, horizontal content rows, and hover card interactions.</p>
-        <div>
-          <span class="tag">Content Discovery</span>
-          <span class="tag">Hover States</span>
-          <span class="tag">Dark Mode</span>
+      <div class="card card--sia card--placeholder">
+        <div class="card__thumb">SIA</div>
+        <div class="card__body">
+          <span class="badge-v2">&#128274; V2 &mdash; Revised</span>
+          <span class="card__label">Revised Version &mdash; Travel</span>
+          <h2 class="card__title">Singapore Airlines</h2>
+          <p class="card__desc">Revised based on classmate feedback. Coming soon.</p>
+          <span class="card__cta">Not yet available</span>
         </div>
-        <span class="card__cta">Open prototype &rarr;</span>
       </div>
-    </a>
 
-    <a href="amazon-sg.html" class="card card--amazon">
-      <div class="card__thumb">a</div>
-      <div class="card__body">
-        <span class="card__label">Prototype 03 &mdash; E-commerce</span>
-        <h2 class="card__title">Amazon Singapore</h2>
-        <p class="card__desc">Homepage with search, hero carousel, Deals of the Day, Local Brands carousel, and category grid.</p>
-        <div>
-          <span class="tag">Search</span>
-          <span class="tag">Product Cards</span>
-          <span class="tag">Carousel</span>
+    </div>
+  </section>
+
+  <!-- ── ROW 2: NETFLIX ── -->
+  <section class="proto-section">
+    <p class="section-label">02 &mdash; Netflix Singapore</p>
+    <div class="row">
+
+      <a href="netflix-sg.html" class="card card--netflix">
+        <div class="card__thumb">N</div>
+        <div class="card__body">
+          <span class="card__label">Current Replica &mdash; Streaming</span>
+          <h2 class="card__title">Netflix Singapore</h2>
+          <p class="card__desc">Logged-in browse homepage with hero banner, horizontal content rows, and hover card interactions.</p>
+          <div>
+            <span class="tag">Content Discovery</span>
+            <span class="tag">Hover States</span>
+            <span class="tag">Dark Mode</span>
+          </div>
+          <span class="card__cta">Open prototype &rarr;</span>
         </div>
-        <span class="card__cta">Open prototype &rarr;</span>
-      </div>
-    </a>
+      </a>
 
-  </div>
+      <div class="card card--netflix card--placeholder">
+        <div class="card__thumb">N</div>
+        <div class="card__body">
+          <span class="badge-v2">&#128274; V2 &mdash; Revised</span>
+          <span class="card__label">Revised Version &mdash; Streaming</span>
+          <h2 class="card__title">Netflix Singapore</h2>
+          <p class="card__desc">Revised based on classmate feedback. Coming soon.</p>
+          <span class="card__cta">Not yet available</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── ROW 3: AMAZON ── -->
+  <section class="proto-section">
+    <p class="section-label">03 &mdash; Amazon Singapore</p>
+    <div class="row">
+
+      <a href="amazon-sg.html" class="card card--amazon">
+        <div class="card__thumb">a</div>
+        <div class="card__body">
+          <span class="card__label">Current Replica &mdash; E-commerce</span>
+          <h2 class="card__title">Amazon Singapore</h2>
+          <p class="card__desc">Homepage with search, hero carousel, Deals of the Day, Local Brands carousel, and category grid.</p>
+          <div>
+            <span class="tag">Search</span>
+            <span class="tag">Product Cards</span>
+            <span class="tag">Carousel</span>
+          </div>
+          <span class="card__cta">Open prototype &rarr;</span>
+        </div>
+      </a>
+
+      <div class="card card--amazon card--placeholder">
+        <div class="card__thumb">a</div>
+        <div class="card__body">
+          <span class="badge-v2">&#128274; V2 &mdash; Revised</span>
+          <span class="card__label">Revised Version &mdash; E-commerce</span>
+          <h2 class="card__title">Amazon Singapore</h2>
+          <p class="card__desc">Revised based on classmate feedback. Coming soon.</p>
+          <span class="card__cta">Not yet available</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
 </main>
 
 <footer>
