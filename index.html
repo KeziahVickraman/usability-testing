@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Usability Testing Prototypes</title>
   <style>
+    html { scroll-behavior: smooth; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -250,13 +251,105 @@
       font-size: 0.8rem;
     }
 
+    /* ── STICKY NAV ── */
+    .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 56px;
+      background: rgba(15, 17, 23, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      gap: 1rem;
+    }
+
+    .site-nav__title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .site-nav__links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      list-style: none;
+    }
+
+    .site-nav__links a {
+      position: relative;
+      display: block;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+
+    .site-nav__links a::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 0.75rem;
+      right: 0.75rem;
+      height: 2px;
+      border-radius: 2px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.2s ease;
+    }
+
+    .site-nav__links a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .site-nav__links a.active {
+      color: var(--text);
+    }
+
+    .site-nav__links a.active::after {
+      transform: scaleX(1);
+    }
+
+    /* offset header to account for fixed nav */
+    body { padding-top: 56px; }
+
+    /* scroll-margin so anchor jumps clear the nav */
+    .proto-section { scroll-margin-top: 72px; }
+
     @media (max-width: 640px) {
       .row { grid-template-columns: 1fr; }
       .card__thumb { height: 140px; }
+      .site-nav__title { display: none; }
+      .site-nav__links a { padding: 0.4rem 0.55rem; font-size: 0.75rem; }
     }
   </style>
 </head>
 <body>
+
+<nav class="site-nav" aria-label="Page navigation">
+  <span class="site-nav__title">Usability Testing Prototypes</span>
+  <ul class="site-nav__links">
+    <li><a href="#singapore-airlines" data-section="singapore-airlines">Singapore Airlines</a></li>
+    <li><a href="#netflix-sg"         data-section="netflix-sg">Netflix SG</a></li>
+    <li><a href="#amazon-sg"          data-section="amazon-sg">Amazon SG</a></li>
+  </ul>
+</nav>
 
 <header>
   <h1>Usability Testing Prototypes</h1>
@@ -266,7 +359,7 @@
 <main>
 
   <!-- ── ROW 1: SINGAPORE AIRLINES ── -->
-  <section class="proto-section">
+  <section id="singapore-airlines" class="proto-section">
     <p class="section-label">01 &mdash; Singapore Airlines</p>
     <div class="row">
 
@@ -300,7 +393,7 @@
   </section>
 
   <!-- ── ROW 2: NETFLIX ── -->
-  <section class="proto-section">
+  <section id="netflix-sg" class="proto-section">
     <p class="section-label">02 &mdash; Netflix Singapore</p>
     <div class="row">
 
@@ -334,7 +427,7 @@
   </section>
 
   <!-- ── ROW 3: AMAZON ── -->
-  <section class="proto-section">
+  <section id="amazon-sg" class="proto-section">
     <p class="section-label">03 &mdash; Amazon Singapore</p>
     <div class="row">
 
@@ -372,6 +465,40 @@
 <footer>
   Usability Testing Prototypes &mdash; Pure HTML/CSS/JS &mdash; No frameworks
 </footer>
+
+<script>
+  // Smooth scroll for nav links
+  document.querySelectorAll('.site-nav__links a').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Active nav link via IntersectionObserver
+  var navLinks = document.querySelectorAll('.site-nav__links a[data-section]');
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        navLinks.forEach(function (link) {
+          link.classList.toggle('active', link.dataset.section === id);
+        });
+      }
+    });
+  }, {
+    rootMargin: '-56px 0px -60% 0px',
+    threshold: 0
+  });
+
+  document.querySelectorAll('.proto-section[id]').forEach(function (section) {
+    observer.observe(section);
+  });
+</script>
 
 </body>
 </html>
