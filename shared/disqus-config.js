@@ -24,7 +24,7 @@
     this.page.title    = cfg.title    || document.title;
   };
 
-  var SHORTNAME = 'YOUR-DISQUS-SHORTNAME';
+  var SHORTNAME = 'usability-testing-1';
 
   // Lazy-load Disqus only when the thread container scrolls into view
   var threadEl = document.getElementById('disqus_thread');
