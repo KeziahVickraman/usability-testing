@@ -7,636 +7,178 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --black: #000000;
-      --dark: #141414;
-      --surface: #1f1f1f;
-      --surface2: #2a2a2a;
-      --red: #e50914;
-      --red-hover: #f40612;
-      --white: #ffffff;
-      --text: #e5e5e5;
-      --muted: #808080;
-      --border: #333;
-      --radius: 4px;
-      --transition: 0.2s ease;
+      --black: #000000; --dark: #141414; --surface: #1f1f1f; --surface2: #2a2a2a;
+      --red: #e50914; --white: #ffffff; --text: #e5e5e5; --muted: #808080;
+      --border: #333; --radius: 4px; --transition: 0.2s ease;
     }
-
     html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; overflow-x: hidden; }
 
-    body {
-      background: var(--black);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* ── NAV ── */
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 0 4%;
-      height: 68px;
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%);
-      transition: background 0.3s ease;
-    }
-
-    .nav.scrolled {
-      background: rgba(20,20,20,0.98);
-      backdrop-filter: blur(8px);
-    }
-
-    .nav-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      color: var(--red);
-      letter-spacing: 0.05em;
-      text-decoration: none;
-      flex-shrink: 0;
-      line-height: 1;
-    }
-
-    .nav-links {
-      display: flex;
-      list-style: none;
-      gap: 0;
-    }
-
-    .nav-links a {
-      color: var(--text);
-      text-decoration: none;
-      font-size: 0.82rem;
-      font-weight: 400;
-      padding: 0 0.9rem;
-      height: 68px;
-      display: flex;
-      align-items: center;
-      transition: color var(--transition);
-      white-space: nowrap;
-    }
-
+    /* NAV */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 4%; height: 68px; display: flex; align-items: center; gap: 2rem; background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%); transition: background 0.3s ease; }
+    .nav.scrolled { background: rgba(20,20,20,0.98); backdrop-filter: blur(8px); }
+    .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--red); letter-spacing: 0.05em; text-decoration: none; flex-shrink: 0; line-height: 1; }
+    .nav-links { display: flex; list-style: none; gap: 0; }
+    .nav-links a { color: var(--text); text-decoration: none; font-size: 0.82rem; font-weight: 400; padding: 0 0.9rem; height: 68px; display: flex; align-items: center; transition: color var(--transition); white-space: nowrap; }
     .nav-links a:hover { color: var(--white); }
     .nav-links a.active { font-weight: 700; color: var(--white); }
+    .nav-right { margin-left: auto; display: flex; align-items: center; gap: 1.25rem; position: relative; }
 
-    .nav-right {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-    }
-
-    .nav-search-form {
-      display: flex;
-      align-items: center;
-      border: 1px solid transparent;
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: border-color var(--transition), background var(--transition);
-    }
-
-    .nav-search-form.expanded {
-      border-color: var(--white);
-      background: rgba(0,0,0,0.8);
-    }
-
-    .nav-search-btn {
-      background: none;
-      border: none;
-      color: var(--text);
-      cursor: pointer;
-      padding: 0.5rem;
-      display: flex;
-      align-items: center;
-      transition: color var(--transition);
-    }
-
+    /* SEARCH */
+    .nav-search-form { display: flex; align-items: center; border: 1px solid transparent; border-radius: var(--radius); overflow: hidden; transition: border-color var(--transition), background var(--transition); }
+    .nav-search-form.expanded { border-color: var(--white); background: rgba(0,0,0,0.8); }
+    .nav-search-btn { background: none; border: none; color: var(--text); cursor: pointer; padding: 0.5rem; display: flex; align-items: center; transition: color var(--transition); }
     .nav-search-btn:hover { color: var(--white); }
+    .nav-search-input { background: transparent; border: none; color: var(--white); font-size: 0.875rem; font-family: 'Inter', sans-serif; width: 0; padding: 0; transition: width 0.3s ease, padding 0.3s ease; outline: none; }
+    .nav-search-form.expanded .nav-search-input { width: 200px; padding: 0.4rem 0.5rem 0.4rem 0; }
 
-    .nav-search-input {
-      background: transparent;
-      border: none;
-      color: var(--white);
-      font-size: 0.875rem;
-      font-family: 'Inter', sans-serif;
-      width: 0;
-      padding: 0;
-      transition: width 0.3s ease, padding 0.3s ease;
-      outline: none;
-    }
-
-    .nav-search-form.expanded .nav-search-input {
-      width: 200px;
-      padding: 0.4rem 0.5rem 0.4rem 0;
-    }
-
-    .nav-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 4px;
-      background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: white;
-      transition: opacity var(--transition);
-      flex-shrink: 0;
-    }
-
-    .nav-avatar:hover { opacity: 0.8; }
-
-    .nav-notifications {
-      background: none;
-      border: none;
-      color: var(--text);
-      cursor: pointer;
-      padding: 0.5rem;
-      display: flex;
-      align-items: center;
-      position: relative;
-      transition: color var(--transition);
-    }
-
+    /* NOTIFICATIONS */
+    .nav-notifications { background: none; border: none; color: var(--text); cursor: pointer; padding: 0.5rem; display: flex; align-items: center; position: relative; transition: color var(--transition); }
     .nav-notifications:hover { color: var(--white); }
+    .notif-badge { position: absolute; top: 4px; right: 4px; width: 8px; height: 8px; background: var(--red); border-radius: 50%; border: 1.5px solid var(--dark); }
 
-    .notif-badge {
-      position: absolute;
-      top: 4px;
-      right: 4px;
-      width: 8px;
-      height: 8px;
-      background: var(--red);
-      border-radius: 50%;
-      border: 1.5px solid var(--dark);
-    }
+    /* AVATAR + DROPDOWN */
+    .nav-avatar-wrap { position: relative; }
+    .nav-avatar { width: 32px; height: 32px; border-radius: 4px; background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: white; transition: opacity var(--transition); flex-shrink: 0; user-select: none; }
+    .nav-avatar:hover { opacity: 0.8; }
+    .profile-dropdown { position: absolute; top: calc(100% + 12px); right: 0; background: rgba(20,20,20,0.96); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; min-width: 200px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.6); display: none; z-index: 200; animation: fadeDropdown 0.15s ease; }
+    .profile-dropdown.open { display: block; }
+    @keyframes fadeDropdown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+    .pd-section { padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .pd-section:last-child { border-bottom: none; }
+    .pd-profile { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 1rem; cursor: pointer; transition: background 0.15s; }
+    .pd-profile:hover { background: rgba(255,255,255,0.1); }
+    .pd-avatar { width: 28px; height: 28px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: var(--white); flex-shrink: 0; }
+    .pd-name { font-size: 0.82rem; color: var(--text); }
+    .pd-item { padding: 0.6rem 1rem; font-size: 0.82rem; color: var(--text); cursor: pointer; transition: background 0.15s; display: flex; align-items: center; gap: 0.6rem; }
+    .pd-item:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+    .pd-item svg { color: var(--muted); flex-shrink: 0; }
 
-    /* ── HERO ── */
-    .hero {
-      position: relative;
-      height: 100vh;
-      min-height: 600px;
-      max-height: 860px;
-      overflow: hidden;
-    }
-
-    .hero-backdrop {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(165deg, #0d1b2a 0%, #1b2838 30%, #0f0c29 70%, #302b63 100%);
-    }
-
-    .hero-backdrop-img {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding-right: 4%;
-      overflow: hidden;
-    }
-
-    .hero-show-art {
-      width: min(560px, 55vw);
-      aspect-ratio: 16/9;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #1a1a3e 0%, #2d2d5e 50%, #4a3060 100%);
-      position: relative;
-      overflow: hidden;
-      opacity: 0.7;
-      box-shadow: 0 0 80px rgba(0,0,0,0.8);
-    }
-
-    .hero-show-art::after {
-      content: '▶';
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 4rem;
-      color: rgba(255,255,255,0.2);
-    }
-
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        90deg,
-        rgba(0,0,0,0.85) 0%,
-        rgba(0,0,0,0.6) 40%,
-        transparent 70%
-      ),
-      linear-gradient(
-        to top,
-        rgba(20,20,20,1) 0%,
-        rgba(20,20,20,0.4) 12%,
-        transparent 30%
-      );
-    }
-
-    .hero-content {
-      position: absolute;
-      bottom: 22%;
-      left: 4%;
-      max-width: 520px;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: rgba(229,9,20,0.2);
-      border: 1px solid rgba(229,9,20,0.5);
-      border-radius: 4px;
-      padding: 0.3rem 0.75rem;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 1rem;
-    }
-
-    .hero-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      line-height: 0.95;
-      color: var(--white);
-      letter-spacing: 0.02em;
-      margin-bottom: 1rem;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
-    }
-
-    .hero-meta {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
-      font-size: 0.85rem;
-    }
-
-    .hero-match {
-      color: #46d369;
-      font-weight: 700;
-    }
-
-    .hero-year, .hero-rating-badge, .hero-duration {
-      color: var(--muted);
-    }
-
-    .hero-rating-badge {
-      border: 1px solid var(--muted);
-      padding: 0.1rem 0.4rem;
-      font-size: 0.7rem;
-    }
-
-    .hero-desc {
-      font-size: 0.95rem;
-      color: rgba(255,255,255,0.85);
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .hero-tags {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .hero-tag {
-      font-size: 0.72rem;
-      color: var(--muted);
-    }
-
+    /* HERO */
+    .hero { position: relative; height: 100vh; min-height: 600px; max-height: 860px; overflow: hidden; }
+    .hero-backdrop { position: absolute; inset: 0; transition: background 0.8s ease; }
+    .hero-backdrop-img { position: absolute; inset: 0; display: flex; align-items: center; justify-content: flex-end; padding-right: 4%; overflow: hidden; }
+    .hero-show-art { width: min(560px, 55vw); aspect-ratio: 16/9; border-radius: 8px; position: relative; overflow: hidden; opacity: 0.7; box-shadow: 0 0 80px rgba(0,0,0,0.8); transition: background 0.8s ease; display: flex; align-items: center; justify-content: center; font-size: 5rem; }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 40%, transparent 70%), linear-gradient(to top, rgba(20,20,20,1) 0%, rgba(20,20,20,0.4) 12%, transparent 30%); }
+    .hero-content { position: absolute; bottom: 22%; left: 4%; max-width: 520px; transition: opacity 0.5s ease; }
+    .hero-content.fade-out { opacity: 0; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(229,9,20,0.2); border: 1px solid rgba(229,9,20,0.5); border-radius: 4px; padding: 0.3rem 0.75rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red); margin-bottom: 1rem; }
+    .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 7vw, 5.5rem); line-height: 0.95; color: var(--white); letter-spacing: 0.02em; margin-bottom: 1rem; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); }
+    .hero-meta { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.85rem; }
+    .hero-match { color: #46d369; font-weight: 700; }
+    .hero-year, .hero-rating-badge, .hero-duration { color: var(--muted); }
+    .hero-rating-badge { border: 1px solid var(--muted); padding: 0.1rem 0.4rem; font-size: 0.7rem; }
+    .hero-desc { font-size: 0.95rem; color: rgba(255,255,255,0.85); line-height: 1.6; margin-bottom: 1.5rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .hero-tags { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .hero-tag { font-size: 0.72rem; color: var(--muted); }
     .hero-tag::before { content: '•'; margin-right: 0.3rem; color: var(--muted); }
     .hero-tag:first-child::before { content: ''; margin-right: 0; }
-
-    .hero-actions {
-      display: flex;
-      gap: 0.75rem;
-    }
-
-    .btn-play {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      background: var(--white);
-      color: var(--black);
-      border: none;
-      border-radius: 4px;
-      padding: 0.7rem 1.8rem;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background var(--transition);
-      font-family: 'Inter', sans-serif;
-    }
-
+    .hero-actions { display: flex; gap: 0.75rem; }
+    .btn-play { display: flex; align-items: center; gap: 0.6rem; background: var(--white); color: var(--black); border: none; border-radius: 4px; padding: 0.7rem 1.8rem; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background var(--transition); font-family: 'Inter', sans-serif; }
     .btn-play:hover { background: rgba(255,255,255,0.75); }
-
-    .btn-more {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      background: rgba(109,109,110,0.7);
-      color: var(--white);
-      border: none;
-      border-radius: 4px;
-      padding: 0.7rem 1.8rem;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background var(--transition);
-      font-family: 'Inter', sans-serif;
-    }
-
+    .btn-more { display: flex; align-items: center; gap: 0.6rem; background: rgba(109,109,110,0.7); color: var(--white); border: none; border-radius: 4px; padding: 0.7rem 1.8rem; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background var(--transition); font-family: 'Inter', sans-serif; }
     .btn-more:hover { background: rgba(109,109,110,0.5); }
 
-    /* ── CONTENT ROWS ── */
-    .content-section {
-      padding: 0 4% 3rem;
-      position: relative;
-      z-index: 1;
-      margin-top: -6%;
-    }
+    /* HERO PROGRESS DOTS */
+    .hero-dots { position: absolute; bottom: 14%; left: 4%; display: flex; gap: 6px; z-index: 10; }
+    .hero-dot { width: 24px; height: 3px; border-radius: 2px; background: rgba(255,255,255,0.35); border: none; cursor: pointer; padding: 0; transition: background 0.3s, width 0.3s; }
+    .hero-dot.active { background: var(--white); width: 36px; }
 
-    .row-label {
-      font-size: clamp(0.9rem, 1.5vw, 1.15rem);
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
+    /* GENRE PILLS */
+    .genre-pills-wrap { padding: 1.5rem 4% 0; display: flex; align-items: center; gap: 0.5rem; overflow-x: auto; scrollbar-width: none; }
+    .genre-pills-wrap::-webkit-scrollbar { display: none; }
+    .genre-pill { padding: 0.35rem 1rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: var(--text); font-size: 0.78rem; font-weight: 500; cursor: pointer; white-space: nowrap; transition: all 0.18s; font-family: 'Inter', sans-serif; }
+    .genre-pill:hover { border-color: var(--white); color: var(--white); }
+    .genre-pill.active { background: var(--white); color: var(--black); border-color: var(--white); font-weight: 700; }
 
-    .row-label .explore-more {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: #54b3d6;
-      text-decoration: none;
-      opacity: 0;
-      transition: opacity 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-
+    /* CONTENT ROWS */
+    .content-section { padding: 0 4% 3rem; position: relative; z-index: 1; margin-top: -6%; }
+    .content-row { margin-top: 2rem; }
+    .content-row.hidden { display: none; }
+    .row-label { font-size: clamp(0.9rem, 1.5vw, 1.15rem); font-weight: 700; color: var(--white); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem; }
+    .row-label .explore-more { font-size: 0.8rem; font-weight: 500; color: #54b3d6; text-decoration: none; opacity: 0; transition: opacity 0.2s; display: flex; align-items: center; gap: 0.3rem; }
     .content-row:hover .explore-more { opacity: 1; }
-
-    .row-scroll-wrap {
-      position: relative;
-    }
-
-    .row-scroll {
-      display: flex;
-      gap: 0.35rem;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      scroll-behavior: smooth;
-      padding: 0.5rem 0;
-    }
-
+    .row-scroll-wrap { position: relative; }
+    .row-scroll { display: flex; gap: 0.35rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth; padding: 0.5rem 0; }
     .row-scroll::-webkit-scrollbar { display: none; }
-
-    .scroll-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 48px;
-      height: 100%;
-      background: rgba(20,20,20,0.7);
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--white);
-      z-index: 5;
-      opacity: 0;
-      transition: opacity 0.2s;
-      font-size: 1.4rem;
-    }
-
+    .scroll-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 100%; background: rgba(20,20,20,0.7); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--white); z-index: 5; opacity: 0; transition: opacity 0.2s; font-size: 1.4rem; }
     .scroll-arrow.left { left: -4%; border-radius: 0 4px 4px 0; }
     .scroll-arrow.right { right: -4%; border-radius: 4px 0 0 4px; }
-    .row-scroll-wrap:hover .scroll-arrow { opacity: 1; }
+    .scroll-arrow.hidden-arrow { pointer-events: none; opacity: 0 !important; }
+    .row-scroll-wrap:hover .scroll-arrow:not(.hidden-arrow) { opacity: 1; }
 
-    /* ── SHOW CARDS ── */
-    .show-card {
-      flex: 0 0 calc(20% - 0.28rem);
-      min-width: 160px;
-      scroll-snap-align: start;
-      position: relative;
-      border-radius: 4px;
-      overflow: visible;
-      cursor: pointer;
-      transition: transform 0.3s ease, z-index 0s 0.3s;
-    }
-
-    .show-card:hover {
-      transform: scale(1.18);
-      z-index: 10;
-      transition: transform 0.3s ease, z-index 0s;
-    }
-
-    .show-card:focus-visible {
-      outline: 3px solid var(--white);
-      outline-offset: 2px;
-      border-radius: 4px;
-    }
-
-    .show-card-img {
-      width: 100%;
-      aspect-ratio: 16/9;
-      border-radius: 4px;
-      object-fit: cover;
-      display: block;
-      transition: border-radius 0.3s ease;
-    }
-
-    .show-card:hover .show-card-img {
-      border-radius: 4px 4px 0 0;
-    }
-
-    .show-card-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: var(--surface);
-      border-radius: 0 0 4px 4px;
-      padding: 0.75rem;
-      opacity: 0;
-      transform: translateY(0);
-      transition: opacity 0.25s ease 0.05s;
-      pointer-events: none;
-    }
-
-    .show-card:hover .show-card-overlay {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .card-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .card-btn {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: all var(--transition);
-      border: none;
-      flex-shrink: 0;
-    }
-
-    .card-btn-play {
-      background: var(--white);
-      color: var(--black);
-    }
-
+    /* SHOW CARDS */
+    .show-card { flex: 0 0 calc(20% - 0.28rem); min-width: 160px; scroll-snap-align: start; position: relative; border-radius: 4px; overflow: visible; cursor: pointer; transition: transform 0.3s ease, z-index 0s 0.3s; }
+    .show-card:hover { transform: scale(1.18); z-index: 10; transition: transform 0.3s ease, z-index 0s; }
+    .show-card:focus-visible { outline: 3px solid var(--white); outline-offset: 2px; border-radius: 4px; }
+    .show-card.filtered-out { display: none; }
+    .show-card-img { width: 100%; aspect-ratio: 16/9; border-radius: 4px; display: block; transition: border-radius 0.3s ease; }
+    .show-card:hover .show-card-img { border-radius: 4px 4px 0 0; }
+    .show-card-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: var(--surface); border-radius: 0 0 4px 4px; padding: 0.75rem; opacity: 0; transition: opacity 0.25s ease 0.05s; pointer-events: none; }
+    .show-card:hover .show-card-overlay { opacity: 1; pointer-events: auto; }
+    .card-actions { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem; }
+    .card-btn { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.9rem; transition: all var(--transition); border: none; flex-shrink: 0; }
+    .card-btn-play { background: var(--white); color: var(--black); }
     .card-btn-play:hover { background: rgba(255,255,255,0.8); }
-
-    .card-btn-secondary {
-      background: rgba(109,109,110,0.6);
-      color: var(--white);
-      border: 1.5px solid rgba(255,255,255,0.3);
-    }
-
-    .card-btn-secondary:hover {
-      border-color: var(--white);
-      background: rgba(109,109,110,0.9);
-    }
-
-    .card-btn-more {
-      background: rgba(109,109,110,0.6);
-      color: var(--white);
-      border: 1.5px solid rgba(255,255,255,0.3);
-      margin-left: auto;
-    }
-
-    .card-btn-more:hover {
-      border-color: var(--white);
-      background: rgba(109,109,110,0.9);
-    }
-
-    .card-match {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: #46d369;
-      margin-bottom: 0.3rem;
-    }
-
-    .card-title {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--white);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-bottom: 0.3rem;
-    }
-
-    .card-genres {
-      display: flex;
-      gap: 0.25rem;
-      flex-wrap: wrap;
-    }
-
-    .card-genre {
-      font-size: 0.62rem;
-      color: var(--muted);
-    }
-
+    .card-btn-secondary { background: rgba(109,109,110,0.6); color: var(--white); border: 1.5px solid rgba(255,255,255,0.3); }
+    .card-btn-secondary:hover { border-color: var(--white); background: rgba(109,109,110,0.9); }
+    .card-btn-list { background: rgba(109,109,110,0.6); color: var(--white); border: 1.5px solid rgba(255,255,255,0.3); transition: all var(--transition); }
+    .card-btn-list.in-list { background: var(--white); color: var(--black); border-color: var(--white); }
+    .card-btn-list:hover { border-color: var(--white); background: rgba(109,109,110,0.9); }
+    .card-btn-more { background: rgba(109,109,110,0.6); color: var(--white); border: 1.5px solid rgba(255,255,255,0.3); margin-left: auto; }
+    .card-btn-more:hover { border-color: var(--white); }
+    .card-match { font-size: 0.72rem; font-weight: 700; color: #46d369; margin-bottom: 0.3rem; }
+    .card-title { font-size: 0.75rem; font-weight: 600; color: var(--white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0.3rem; }
+    .card-genres { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+    .card-genre { font-size: 0.62rem; color: var(--muted); }
     .card-genre::before { content: '•'; margin-right: 0.2rem; }
     .card-genre:first-child::before { content: ''; }
+    .row-continue .show-card { flex: 0 0 calc(25% - 0.26rem); }
+    .progress-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.2); z-index: 2; }
+    .progress-bar-fill { height: 100%; background: var(--red); border-radius: 0 2px 2px 0; }
 
-    /* ── CONTINUE WATCHING (wider cards with progress) ── */
-    .row-continue .show-card {
-      flex: 0 0 calc(25% - 0.26rem);
-    }
+    /* NO RESULTS MESSAGE */
+    .no-results-msg { color: var(--muted); font-size: 0.9rem; padding: 1rem 0; display: none; }
+    .no-results-msg.show { display: block; }
 
-    .progress-bar {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: rgba(255,255,255,0.2);
-      z-index: 2;
-    }
+    /* VIDEO MODAL */
+    #video-modal { display: none; position: fixed; inset: 0; z-index: 400; background: rgba(0,0,0,0.92); align-items: center; justify-content: center; }
+    #video-modal.open { display: flex; }
+    .video-panel { background: #000; border-radius: 8px; width: min(900px, 96vw); overflow: hidden; box-shadow: 0 24px 80px rgba(0,0,0,0.8); position: relative; animation: scaleIn 0.2s ease; }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    .video-screen { width: 100%; aspect-ratio: 16/9; background: #000; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; }
+    .video-spinner { width: 60px; height: 60px; border: 4px solid rgba(255,255,255,0.1); border-top-color: var(--red); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .video-overlay-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.4); opacity: 0; transition: opacity 0.2s; }
+    .video-screen:hover .video-overlay-play { opacity: 1; }
+    .video-big-play { width: 64px; height: 64px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .video-title-bar { padding: 0.75rem 1rem 0; display: flex; align-items: center; justify-content: space-between; }
+    .video-show-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--white); letter-spacing: 0.05em; }
+    .video-close { background: none; border: none; color: var(--muted); font-size: 1.5rem; cursor: pointer; transition: color 0.15s; line-height: 1; }
+    .video-close:hover { color: var(--white); }
+    .video-controls { padding: 0.5rem 1rem 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .video-scrub-wrap { position: relative; }
+    .video-scrub { -webkit-appearance: none; width: 100%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; outline: none; cursor: pointer; }
+    .video-scrub::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: var(--red); border-radius: 50%; cursor: pointer; }
+    .video-scrub-bar { position: absolute; top: 0; left: 0; height: 4px; background: var(--red); border-radius: 2px; pointer-events: none; }
+    .video-btns { display: flex; align-items: center; gap: 1rem; }
+    .v-btn { background: none; border: none; color: var(--text); cursor: pointer; display: flex; align-items: center; transition: color 0.15s; padding: 4px; }
+    .v-btn:hover { color: var(--white); }
+    .video-time { font-size: 0.75rem; color: var(--muted); margin-left: auto; font-variant-numeric: tabular-nums; }
 
-    .progress-bar-fill {
-      height: 100%;
-      background: var(--red);
-      border-radius: 0 2px 2px 0;
-    }
-
-    /* ── DISQUS ── */
-    .disqus-wrapper {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 4% 4rem;
-    }
-
-    .disqus-divider {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .disqus-divider::before,
-    .disqus-divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .disqus-divider span {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
+    /* DISQUS */
+    .disqus-wrapper { max-width: 900px; margin: 2rem auto; padding: 0 4% 4rem; }
+    .disqus-divider { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+    .disqus-divider::before, .disqus-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .disqus-divider span { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
     #disqus_thread { min-height: 200px; }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .show-card { flex: 0 0 calc(33.33% - 0.24rem); }
       .row-continue .show-card { flex: 0 0 calc(50% - 0.18rem); }
     }
-
     @media (max-width: 480px) {
       .nav { padding: 0 3%; }
       .hero-content { left: 3%; max-width: 90%; }
@@ -657,7 +199,7 @@
     <li><a href="#">TV Shows</a></li>
     <li><a href="#">Movies</a></li>
     <li><a href="#">New &amp; Popular</a></li>
-    <li><a href="#">My List</a></li>
+    <li><a href="#" id="myListNavLink" style="display:none;">My List</a></li>
     <li><a href="#">Browse by Language</a></li>
   </ul>
   <div class="nav-right">
@@ -673,110 +215,191 @@
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
       </svg>
-      <span class="notif-badge" aria-label="3 new notifications"></span>
+      <span class="notif-badge"></span>
     </button>
-    <div class="nav-avatar" role="button" tabindex="0" aria-label="Profile menu" aria-haspopup="true">A</div>
+    <div class="nav-avatar-wrap">
+      <div class="nav-avatar" id="navAvatar" role="button" tabindex="0" aria-label="Profile menu" aria-haspopup="true" aria-expanded="false">A</div>
+      <div class="profile-dropdown" id="profileDropdown">
+        <div class="pd-section">
+          <div class="pd-profile" data-profile="Alex">
+            <div class="pd-avatar" style="background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)">A</div>
+            <span class="pd-name">Alex</span>
+          </div>
+          <div class="pd-profile" data-profile="Jamie">
+            <div class="pd-avatar" style="background:linear-gradient(135deg,#0f2027,#203a43,#2c5364)">J</div>
+            <span class="pd-name">Jamie</span>
+          </div>
+          <div class="pd-profile" data-profile="Kids">
+            <div class="pd-avatar" style="background:linear-gradient(135deg,#f7971e,#ffd200)">K</div>
+            <span class="pd-name">Kids</span>
+          </div>
+        </div>
+        <div class="pd-section">
+          <div class="pd-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Manage Profiles
+          </div>
+          <div class="pd-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+            Account
+          </div>
+          <div class="pd-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Help Centre
+          </div>
+        </div>
+        <div class="pd-section">
+          <div class="pd-item" style="color:#e5e5e5;justify-content:center;font-size:0.8rem;">Sign out of Netflix</div>
+        </div>
+      </div>
+    </div>
   </div>
 </nav>
 
 <!-- HERO -->
-<div class="hero">
-  <div class="hero-backdrop"></div>
+<div class="hero" id="heroSection">
+  <div class="hero-backdrop" id="heroBackdrop"></div>
   <div class="hero-backdrop-img">
-    <div class="hero-show-art" role="img" aria-label="Featured show artwork"></div>
+    <div class="hero-show-art" id="heroArt" role="img" aria-label="Featured show artwork"></div>
   </div>
   <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <div class="hero-badge">
-      <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><polygon points="5,0 6.5,3.5 10,3.8 7.5,6.2 8.2,10 5,8.2 1.8,10 2.5,6.2 0,3.8 3.5,3.5"/></svg>
-      #2 in Singapore Today
-    </div>
-    <h1 class="hero-title">DRAGON<br/>EMPIRE</h1>
+  <div class="hero-content" id="heroContent">
+    <div class="hero-badge" id="heroBadge"></div>
+    <h1 class="hero-title" id="heroTitle"></h1>
     <div class="hero-meta">
-      <span class="hero-match">97% Match</span>
-      <span class="hero-year">2024</span>
-      <span class="hero-rating-badge">MA16+</span>
-      <span class="hero-duration">2 Seasons</span>
+      <span class="hero-match" id="heroMatch"></span>
+      <span class="hero-year" id="heroYear"></span>
+      <span class="hero-rating-badge" id="heroRating"></span>
+      <span class="hero-duration" id="heroDuration"></span>
     </div>
-    <p class="hero-desc">In a world where ancient dragon clans and modern corporations clash for dominance over Southeast Asia's most powerful energy source, one rogue investigator must choose between loyalty and the truth that could reshape history.</p>
-    <div class="hero-tags">
-      <span class="hero-tag">Action</span>
-      <span class="hero-tag">Fantasy</span>
-      <span class="hero-tag">Southeast Asian</span>
-      <span class="hero-tag">Thriller</span>
-    </div>
+    <p class="hero-desc" id="heroDesc"></p>
+    <div class="hero-tags" id="heroTags"></div>
     <div class="hero-actions">
-      <button class="btn-play" aria-label="Play Dragon Empire">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <polygon points="5,3 19,12 5,21"/>
-        </svg>
+      <button class="btn-play" id="heroPlayBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
         Play
       </button>
-      <button class="btn-more" aria-label="More information about Dragon Empire">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-        </svg>
+      <button class="btn-more" id="heroMoreBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         More Info
       </button>
     </div>
   </div>
+  <div class="hero-dots" id="heroDots"></div>
+</div>
+
+<!-- GENRE PILLS -->
+<div class="genre-pills-wrap" id="genrePills">
+  <button class="genre-pill active" data-genre="All">All</button>
 </div>
 
 <!-- CONTENT ROWS -->
-<div class="content-section">
+<div class="content-section" id="contentSection">
 
-  <!-- Continue Watching -->
+  <!-- My List (hidden until items added) -->
+  <div class="content-row" id="row-mylist" style="display:none;">
+    <div class="row-label">My List</div>
+    <div class="row-scroll-wrap">
+      <button class="scroll-arrow left" aria-label="Scroll left" onclick="scrollRow('mylist',-1)">&#8249;</button>
+      <div class="row-scroll" id="scroll-row-mylist"></div>
+      <button class="scroll-arrow right" aria-label="Scroll right" onclick="scrollRow('mylist',1)">&#8250;</button>
+    </div>
+    <p class="no-results-msg" id="mylist-empty"></p>
+  </div>
+
   <div class="content-row" id="row-continue">
     <div class="row-label">
       Continue Watching for Alex
       <a href="#" class="explore-more" tabindex="-1" aria-hidden="true">Explore All <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></a>
     </div>
     <div class="row-scroll-wrap">
-      <button class="scroll-arrow left" aria-label="Scroll left" onclick="scrollRow('row-continue',-1)">&#8249;</button>
+      <button class="scroll-arrow left" aria-label="Scroll left" onclick="scrollRow('continue',-1)">&#8249;</button>
       <div class="row-scroll row-continue" id="scroll-row-continue"></div>
-      <button class="scroll-arrow right" aria-label="Scroll right" onclick="scrollRow('row-continue',1)">&#8250;</button>
+      <button class="scroll-arrow right" aria-label="Scroll right" onclick="scrollRow('continue',1)">&#8250;</button>
     </div>
+    <p class="no-results-msg" id="no-continue"></p>
   </div>
 
-  <!-- Trending -->
   <div class="content-row" id="row-trending" style="margin-top:2rem;">
     <div class="row-label">
       Trending in Singapore
       <a href="#" class="explore-more" tabindex="-1" aria-hidden="true">Explore All <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></a>
     </div>
     <div class="row-scroll-wrap">
-      <button class="scroll-arrow left" aria-label="Scroll left" onclick="scrollRow('row-trending',-1)">&#8249;</button>
+      <button class="scroll-arrow left" aria-label="Scroll left" onclick="scrollRow('trending',-1)">&#8249;</button>
       <div class="row-scroll" id="scroll-row-trending"></div>
-      <button class="scroll-arrow right" aria-label="Scroll right" onclick="scrollRow('row-trending',1)">&#8250;</button>
+      <button class="scroll-arrow right" aria-label="Scroll right" onclick="scrollRow('trending',1)">&#8250;</button>
     </div>
+    <p class="no-results-msg" id="no-trending"></p>
   </div>
 
-  <!-- Because You Watched -->
   <div class="content-row" id="row-because" style="margin-top:2rem;">
     <div class="row-label">
       Because You Watched <em style="font-style:normal;color:#54b3d6;">Squid Game</em>
       <a href="#" class="explore-more" tabindex="-1" aria-hidden="true">Explore All <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></a>
     </div>
     <div class="row-scroll-wrap">
-      <button class="scroll-arrow left" aria-label="Scroll left" onclick="scrollRow('row-because',-1)">&#8249;</button>
+      <button class="scroll-arrow left" aria-label="Scroll left" onclick="scrollRow('because',-1)">&#8249;</button>
       <div class="row-scroll" id="scroll-row-because"></div>
-      <button class="scroll-arrow right" aria-label="Scroll right" onclick="scrollRow('row-because',1)">&#8250;</button>
+      <button class="scroll-arrow right" aria-label="Scroll right" onclick="scrollRow('because',1)">&#8250;</button>
     </div>
+    <p class="no-results-msg" id="no-because"></p>
   </div>
 
-  <!-- Top Picks -->
   <div class="content-row" id="row-picks" style="margin-top:2rem;">
     <div class="row-label">
       Top Picks for You
       <a href="#" class="explore-more" tabindex="-1" aria-hidden="true">Explore All <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></a>
     </div>
     <div class="row-scroll-wrap">
-      <button class="scroll-arrow left" aria-label="Scroll left" onclick="scrollRow('row-picks',-1)">&#8249;</button>
+      <button class="scroll-arrow left" aria-label="Scroll left" onclick="scrollRow('picks',-1)">&#8249;</button>
       <div class="row-scroll" id="scroll-row-picks"></div>
-      <button class="scroll-arrow right" aria-label="Scroll right" onclick="scrollRow('row-picks',1)">&#8250;</button>
+      <button class="scroll-arrow right" aria-label="Scroll right" onclick="scrollRow('picks',1)">&#8250;</button>
     </div>
+    <p class="no-results-msg" id="no-picks"></p>
   </div>
 
+</div>
+
+<!-- VIDEO MODAL -->
+<div id="video-modal" role="dialog" aria-modal="true" aria-label="Video player">
+  <div class="video-panel">
+    <div class="video-title-bar">
+      <span class="video-show-title" id="video-title">DRAGON EMPIRE</span>
+      <button class="video-close" onclick="closeVideoModal()" aria-label="Close video">&times;</button>
+    </div>
+    <div class="video-screen" id="videoScreen">
+      <div class="video-spinner" id="videoSpinner"></div>
+      <div class="video-overlay-play" id="videoOverlayPlay">
+        <div class="video-big-play">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#000"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="video-controls">
+      <div style="position:relative;">
+        <div class="video-scrub-bar" id="scrubBar" style="width:0%"></div>
+        <input type="range" class="video-scrub" id="videoScrub" min="0" max="100" value="0" aria-label="Video progress" />
+      </div>
+      <div class="video-btns">
+        <button class="v-btn" id="playPauseBtn" aria-label="Play/pause">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" id="playPauseIcon">
+            <polygon points="5,3 19,12 5,21" fill="currentColor" stroke="none"/>
+          </svg>
+        </button>
+        <button class="v-btn" aria-label="Next episode">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5,4 15,12 5,20"/><line x1="19" y1="4" x2="19" y2="20"/></svg>
+        </button>
+        <button class="v-btn" aria-label="Volume">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+        </button>
+        <span class="video-time" id="videoTime">0:00 / 52:14</span>
+        <button class="v-btn" style="margin-left:auto;" aria-label="Fullscreen">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- DISQUS -->
@@ -786,72 +409,204 @@
 </div>
 
 <script>
-(function() {
+(function () {
   'use strict';
 
   // ── DATA ──────────────────────────────────────────────
+  const heroShows = [
+    {
+      title: 'DRAGON\nEMPIRE', badge: '#2 in Singapore Today',
+      match: '97%', year: '2024', rating: 'MA16+', duration: '2 Seasons',
+      desc: 'In a world where ancient dragon clans and modern corporations clash for dominance over Southeast Asia\'s most powerful energy source, one rogue investigator must choose between loyalty and the truth.',
+      tags: ['Action','Fantasy','Southeast Asian','Thriller'],
+      backdrop: 'linear-gradient(165deg, #0d1b2a 0%, #1b2838 30%, #0f0c29 70%, #302b63 100%)',
+      artBg: 'linear-gradient(135deg, #1a1a3e, #2d2d5e, #4a3060)', artIcon: '🐉'
+    },
+    {
+      title: 'HAWKER\nCHRONICLES', badge: '#1 in Singapore Today',
+      match: '99%', year: '2024', rating: 'PG', duration: '1 Season',
+      desc: 'A sweeping documentary series following five Michelin-starred hawker stall masters across Singapore, uncovering the family stories, secret recipes, and immigrant roots behind every plate.',
+      tags: ['Documentary','Food','Singapore','Award-winning'],
+      backdrop: 'linear-gradient(165deg, #1a0800 0%, #3d1a00 30%, #5c2800 70%, #7a3500 100%)',
+      artBg: 'linear-gradient(135deg, #331a00, #804000, #cc6600)', artIcon: '🍜'
+    },
+    {
+      title: 'SONGBIRD\nSG', badge: '#5 in Singapore Today',
+      match: '91%', year: '2023', rating: 'PG13', duration: '16 Episodes',
+      desc: 'A young busker from Geylang discovers her voice carries supernatural resonance — and that powerful forces in the music industry will stop at nothing to own it.',
+      tags: ['Romance','Drama','Music','Supernatural'],
+      backdrop: 'linear-gradient(165deg, #1a0033 0%, #2d004d 30%, #400066 70%, #590080 100%)',
+      artBg: 'linear-gradient(135deg, #1a0033, #4d0099, #6600cc)', artIcon: '🎵'
+    },
+  ];
+
   const continueWatching = [
-    { title: 'Money Heist: Korea', genres: ['Crime','Drama'], match: 95, progress: 62, gradient: 'linear-gradient(135deg,#1a0000,#5c0000,#8b0000)', icon: '🎭' },
-    { title: 'Singapore Social', genres: ['Reality','Documentary'], match: 88, progress: 35, gradient: 'linear-gradient(135deg,#001a4d,#003380,#0055cc)', icon: '📱' },
-    { title: 'The Witcher', genres: ['Fantasy','Action'], match: 92, progress: 80, gradient: 'linear-gradient(135deg,#1a1a00,#4d4d00,#808000)', icon: '⚔️' },
-    { title: 'Dark', genres: ['Sci-Fi','Thriller'], match: 99, progress: 20, gradient: 'linear-gradient(135deg,#000000,#1a1a2e,#2d2d5e)', icon: '🌀' },
+    { title: 'Money Heist: Korea', genres: ['Crime','Drama'],        match: 95, progress: 62, gradient: 'linear-gradient(135deg,#1a0000,#5c0000,#8b0000)', icon: '🎭' },
+    { title: 'Singapore Social',   genres: ['Reality','Documentary'],match: 88, progress: 35, gradient: 'linear-gradient(135deg,#001a4d,#003380,#0055cc)', icon: '📱' },
+    { title: 'The Witcher',        genres: ['Fantasy','Action'],     match: 92, progress: 80, gradient: 'linear-gradient(135deg,#1a1a00,#4d4d00,#808000)', icon: '⚔️' },
+    { title: 'Dark',               genres: ['Sci-Fi','Thriller'],    match: 99, progress: 20, gradient: 'linear-gradient(135deg,#000000,#1a1a2e,#2d2d5e)', icon: '🌀' },
   ];
 
   const trending = [
-    { title: 'Songbird SG', genres: ['Romance','Drama'], match: 91, gradient: 'linear-gradient(135deg,#1a0033,#4d0099,#6600cc)', icon: '🎵' },
-    { title: 'Hawker Chronicles', genres: ['Documentary','Food'], match: 97, gradient: 'linear-gradient(135deg,#331a00,#804000,#cc6600)', icon: '🍜' },
-    { title: 'Extraction 2', genres: ['Action','Thriller'], match: 85, gradient: 'linear-gradient(135deg,#001a00,#004d00,#008000)', icon: '💥' },
-    { title: 'The Crown S6', genres: ['Drama','Historical'], match: 89, gradient: 'linear-gradient(135deg,#1a1400,#4d3d00,#806600)', icon: '👑' },
-    { title: 'Beef', genres: ['Comedy','Drama'], match: 96, gradient: 'linear-gradient(135deg,#00001a,#00004d,#000080)', icon: '🤬' },
-    { title: 'All of Us Are Dead', genres: ['Horror','Thriller'], match: 93, gradient: 'linear-gradient(135deg,#1a0000,#4d1a00,#802b00)', icon: '🧟' },
-    { title: 'One Piece', genres: ['Anime','Adventure'], match: 98, gradient: 'linear-gradient(135deg,#001a33,#004d80,#0066cc)', icon: '🏴‍☠️' },
-    { title: 'Lupin III', genres: ['Anime','Crime'], match: 87, gradient: 'linear-gradient(135deg,#001a0d,#004d26,#008040)', icon: '🎩' },
+    { title: 'Songbird SG',         genres: ['Romance','Drama'],           match: 91, gradient: 'linear-gradient(135deg,#1a0033,#4d0099,#6600cc)', icon: '🎵' },
+    { title: 'Hawker Chronicles',   genres: ['Documentary','Food'],        match: 97, gradient: 'linear-gradient(135deg,#331a00,#804000,#cc6600)', icon: '🍜' },
+    { title: 'Extraction 2',        genres: ['Action','Thriller'],         match: 85, gradient: 'linear-gradient(135deg,#001a00,#004d00,#008000)', icon: '💥' },
+    { title: 'The Crown S6',        genres: ['Drama','Historical'],        match: 89, gradient: 'linear-gradient(135deg,#1a1400,#4d3d00,#806600)', icon: '👑' },
+    { title: 'Beef',                genres: ['Comedy','Drama'],            match: 96, gradient: 'linear-gradient(135deg,#00001a,#00004d,#000080)', icon: '🤬' },
+    { title: 'All of Us Are Dead',  genres: ['Horror','Thriller'],         match: 93, gradient: 'linear-gradient(135deg,#1a0000,#4d1a00,#802b00)', icon: '🧟' },
+    { title: 'One Piece',           genres: ['Anime','Adventure'],         match: 98, gradient: 'linear-gradient(135deg,#001a33,#004d80,#0066cc)', icon: '🏴‍☠️' },
+    { title: 'Lupin III',           genres: ['Anime','Crime'],             match: 87, gradient: 'linear-gradient(135deg,#001a0d,#004d26,#008040)', icon: '🎩' },
   ];
 
   const because = [
-    { title: 'Sweet Home', genres: ['Horror','Drama'], match: 94, gradient: 'linear-gradient(135deg,#0d001a,#260033,#400066)', icon: '👁' },
-    { title: 'Alice in Borderland', genres: ['Thriller','Sci-Fi'], match: 96, gradient: 'linear-gradient(135deg,#001a1a,#004d4d,#008080)', icon: '🃏' },
-    { title: 'Juvenile Justice', genres: ['Crime','Drama'], match: 90, gradient: 'linear-gradient(135deg,#1a0d00,#4d2600,#804000)', icon: '⚖️' },
-    { title: 'Mask Girl', genres: ['Drama','Thriller'], match: 92, gradient: 'linear-gradient(135deg,#1a001a,#4d004d,#800080)', icon: '🎭' },
-    { title: 'My Mister', genres: ['Drama'], match: 88, gradient: 'linear-gradient(135deg,#0a0a0a,#1a1a1a,#2a2a2a)', icon: '🌧' },
-    { title: 'Vagabond', genres: ['Action','Thriller'], match: 83, gradient: 'linear-gradient(135deg,#001433,#002966,#004099)', icon: '🌍' },
-    { title: 'Kingdom', genres: ['Horror','Historical'], match: 95, gradient: 'linear-gradient(135deg,#0d0d00,#2b2b00,#474700)', icon: '⚔️' },
+    { title: 'Sweet Home',          genres: ['Horror','Drama'],            match: 94, gradient: 'linear-gradient(135deg,#0d001a,#260033,#400066)', icon: '👁' },
+    { title: 'Alice in Borderland', genres: ['Thriller','Sci-Fi'],        match: 96, gradient: 'linear-gradient(135deg,#001a1a,#004d4d,#008080)', icon: '🃏' },
+    { title: 'Juvenile Justice',    genres: ['Crime','Drama'],             match: 90, gradient: 'linear-gradient(135deg,#1a0d00,#4d2600,#804000)', icon: '⚖️' },
+    { title: 'Mask Girl',           genres: ['Drama','Thriller'],          match: 92, gradient: 'linear-gradient(135deg,#1a001a,#4d004d,#800080)', icon: '🎭' },
+    { title: 'My Mister',           genres: ['Drama'],                     match: 88, gradient: 'linear-gradient(135deg,#0a0a0a,#1a1a1a,#2a2a2a)', icon: '🌧' },
+    { title: 'Vagabond',            genres: ['Action','Thriller'],         match: 83, gradient: 'linear-gradient(135deg,#001433,#002966,#004099)', icon: '🌍' },
+    { title: 'Kingdom',             genres: ['Horror','Historical'],       match: 95, gradient: 'linear-gradient(135deg,#0d0d00,#2b2b00,#474700)', icon: '⚔️' },
   ];
 
   const topPicks = [
-    { title: 'Alchemy of Souls', genres: ['Fantasy','Romance'], match: 91, gradient: 'linear-gradient(135deg,#00001a,#00004d,#000080,#001a4d)', icon: '✨' },
-    { title: 'Pachinko', genres: ['Drama','Historical'], match: 98, gradient: 'linear-gradient(135deg,#1a0000,#4d0000,#800000)', icon: '🌸' },
-    { title: 'Move to Heaven', genres: ['Drama'], match: 94, gradient: 'linear-gradient(135deg,#001a1a,#003333,#004d4d)', icon: '🕊' },
-    { title: 'Extraordinary Attorney Woo', genres: ['Romance','Legal'], match: 97, gradient: 'linear-gradient(135deg,#002600,#004d00,#007a00)', icon: '🐳' },
-    { title: 'Navillera', genres: ['Drama','Sports'], match: 90, gradient: 'linear-gradient(135deg,#1a1400,#4d3d00,#806600)', icon: '💃' },
-    { title: 'My Liberation Notes', genres: ['Drama','Slice of Life'], match: 89, gradient: 'linear-gradient(135deg,#0d001a,#200033,#33004d)', icon: '📔' },
-    { title: 'Twenty-Five Twenty-One', genres: ['Romance','Youth'], match: 93, gradient: 'linear-gradient(135deg,#001a0d,#003320,#004d33)', icon: '🏐' },
+    { title: 'Alchemy of Souls',             genres: ['Fantasy','Romance'],  match: 91, gradient: 'linear-gradient(135deg,#00001a,#00004d,#000080)', icon: '✨' },
+    { title: 'Pachinko',                     genres: ['Drama','Historical'], match: 98, gradient: 'linear-gradient(135deg,#1a0000,#4d0000,#800000)', icon: '🌸' },
+    { title: 'Move to Heaven',               genres: ['Drama'],              match: 94, gradient: 'linear-gradient(135deg,#001a1a,#003333,#004d4d)', icon: '🕊' },
+    { title: 'Extraordinary Attorney Woo',   genres: ['Romance','Legal'],    match: 97, gradient: 'linear-gradient(135deg,#002600,#004d00,#007a00)', icon: '🐳' },
+    { title: 'Navillera',                    genres: ['Drama','Sports'],     match: 90, gradient: 'linear-gradient(135deg,#1a1400,#4d3d00,#806600)', icon: '💃' },
+    { title: 'My Liberation Notes',          genres: ['Drama','Slice of Life'], match: 89, gradient: 'linear-gradient(135deg,#0d001a,#200033,#33004d)', icon: '📔' },
+    { title: 'Twenty-Five Twenty-One',       genres: ['Romance','Youth'],   match: 93, gradient: 'linear-gradient(135deg,#001a0d,#003320,#004d33)', icon: '🏐' },
   ];
 
-  // ── RENDER ROWS ───────────────────────────────────────
+  const allShows = [...continueWatching, ...trending, ...because, ...topPicks];
+  let myList = new Set();
+  let activeGenre = 'All';
+
+  // ── COLLECT ALL GENRES ───────────────────────────────
+  const allGenres = new Set(['All']);
+  allShows.forEach(s => s.genres.forEach(g => allGenres.add(g)));
+
+  // Render genre pills
+  const pillsWrap = document.getElementById('genrePills');
+  [...allGenres].forEach(g => {
+    if (g === 'All') return;
+    const btn = document.createElement('button');
+    btn.className = 'genre-pill';
+    btn.dataset.genre = g;
+    btn.textContent = g;
+    pillsWrap.appendChild(btn);
+  });
+
+  pillsWrap.addEventListener('click', e => {
+    const pill = e.target.closest('.genre-pill');
+    if (!pill) return;
+    document.querySelectorAll('.genre-pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    activeGenre = pill.dataset.genre;
+    applyGenreFilter();
+  });
+
+  function applyGenreFilter() {
+    ['continue','trending','because','picks'].forEach(rowId => {
+      const container = document.getElementById('scroll-row-' + rowId);
+      if (!container) return;
+      let visibleCount = 0;
+      container.querySelectorAll('.show-card').forEach(card => {
+        const genres = card.dataset.genres ? card.dataset.genres.split(',') : [];
+        const matches = activeGenre === 'All' || genres.includes(activeGenre);
+        card.classList.toggle('filtered-out', !matches);
+        if (matches) visibleCount++;
+      });
+      const noMsg = document.getElementById('no-' + rowId);
+      if (noMsg) { noMsg.textContent = visibleCount === 0 ? `No ${activeGenre} titles in this row.` : ''; noMsg.classList.toggle('show', visibleCount === 0); }
+    });
+  }
+
+  // ── HERO ROTATION ─────────────────────────────────────
+  let heroIdx = 0;
+  let heroTimer;
+
+  function renderHero(idx, animate) {
+    const s = heroShows[idx];
+    const content = document.getElementById('heroContent');
+
+    if (animate) {
+      content.classList.add('fade-out');
+      setTimeout(() => {
+        setHeroContent(s);
+        content.classList.remove('fade-out');
+      }, 400);
+    } else {
+      setHeroContent(s);
+    }
+
+    document.getElementById('heroBackdrop').style.background = s.backdrop;
+    document.getElementById('heroArt').style.background = s.artBg;
+    document.getElementById('heroArt').textContent = s.artIcon;
+
+    document.querySelectorAll('.hero-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+
+  function setHeroContent(s) {
+    document.getElementById('heroBadge').textContent = s.badge;
+    document.getElementById('heroTitle').innerHTML = s.title.replace('\n', '<br/>');
+    document.getElementById('heroMatch').textContent = s.match + ' Match';
+    document.getElementById('heroYear').textContent = s.year;
+    document.getElementById('heroRating').textContent = s.rating;
+    document.getElementById('heroDuration').textContent = s.duration;
+    document.getElementById('heroDesc').textContent = s.desc;
+    document.getElementById('heroTags').innerHTML = s.tags.map(t => `<span class="hero-tag">${t}</span>`).join('');
+    document.getElementById('heroPlayBtn').onclick = () => openVideoModal(s.title.replace('\n', ' '));
+  }
+
+  // Build hero dots
+  const dotsWrap = document.getElementById('heroDots');
+  heroShows.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', `Show ${i + 1}`);
+    dot.addEventListener('click', () => { clearInterval(heroTimer); heroIdx = i; renderHero(i, true); startHeroTimer(); });
+    dotsWrap.appendChild(dot);
+  });
+
+  function startHeroTimer() {
+    heroTimer = setInterval(() => {
+      heroIdx = (heroIdx + 1) % heroShows.length;
+      renderHero(heroIdx, true);
+    }, 6000);
+  }
+
+  renderHero(0, false);
+  startHeroTimer();
+
+  // ── CARD BUILDER ──────────────────────────────────────
   function makeCard(show, isContinue) {
     const card = document.createElement('div');
     card.className = 'show-card';
     card.tabIndex = 0;
     card.setAttribute('role', 'button');
     card.setAttribute('aria-label', `${show.title}: ${show.match}% match`);
+    card.dataset.title = show.title.toLowerCase();
+    card.dataset.genres = show.genres.join(',');
 
     const progressHTML = isContinue
-      ? `<div class="progress-bar"><div class="progress-bar-fill" style="width:${show.progress}%"></div></div>`
-      : '';
+      ? `<div class="progress-bar"><div class="progress-bar-fill" style="width:${show.progress}%"></div></div>` : '';
+
+    const inList = myList.has(show.title);
 
     card.innerHTML = `
-      <div class="show-card-img" style="background:${show.gradient};display:flex;align-items:center;justify-content:center;font-size:2.5rem;position:relative;" role="img" aria-label="${show.title} thumbnail">
-        ${show.icon}
-        ${progressHTML}
+      <div class="show-card-img" style="background:${show.gradient};display:flex;align-items:center;justify-content:center;font-size:2.5rem;position:relative;">
+        ${show.icon}${progressHTML}
       </div>
       <div class="show-card-overlay">
         <div class="card-actions">
           <button class="card-btn card-btn-play" aria-label="Play ${show.title}">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
           </button>
-          <button class="card-btn card-btn-secondary" aria-label="Add ${show.title} to My List">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <button class="card-btn card-btn-list ${inList ? 'in-list' : ''}" aria-label="${inList ? 'Remove from' : 'Add to'} My List" data-title="${show.title}">
+            ${inList
+              ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>'
+              : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>'}
           </button>
           <button class="card-btn card-btn-secondary" aria-label="Like ${show.title}">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -868,16 +623,76 @@
         <div class="card-genres">${show.genres.map(g => `<span class="card-genre">${g}</span>`).join('')}</div>
       </div>`;
 
-    card.addEventListener('keydown', e => {
-      if (e.key === 'Enter') card.querySelector('.card-btn-play').click();
+    // Play
+    card.querySelector('.card-btn-play').addEventListener('click', e => {
+      e.stopPropagation();
+      openVideoModal(show.title);
     });
+
+    // Add/remove from My List
+    card.querySelector('.card-btn-list').addEventListener('click', e => {
+      e.stopPropagation();
+      toggleMyList(show, card.querySelector('.card-btn-list'));
+    });
+
+    card.addEventListener('keydown', e => { if (e.key === 'Enter') card.querySelector('.card-btn-play').click(); });
 
     return card;
   }
 
+  // ── MY LIST ───────────────────────────────────────────
+  const myListShows = {};
+
+  function toggleMyList(show, btn) {
+    const title = show.title;
+    if (myList.has(title)) {
+      myList.delete(title);
+      delete myListShows[title];
+      btn.classList.remove('in-list');
+      btn.setAttribute('aria-label', 'Add to My List');
+      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
+      // Also update all other cards of the same show
+      document.querySelectorAll(`.card-btn-list[data-title="${title}"]`).forEach(b => {
+        if (b !== btn) {
+          b.classList.remove('in-list');
+          b.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
+        }
+      });
+    } else {
+      myList.add(title);
+      myListShows[title] = show;
+      btn.classList.add('in-list');
+      btn.setAttribute('aria-label', 'Remove from My List');
+      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
+      document.querySelectorAll(`.card-btn-list[data-title="${title}"]`).forEach(b => {
+        if (b !== btn) {
+          b.classList.add('in-list');
+          b.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
+        }
+      });
+    }
+    refreshMyListRow();
+  }
+
+  function refreshMyListRow() {
+    const row = document.getElementById('row-mylist');
+    const container = document.getElementById('scroll-row-mylist');
+    if (myList.size === 0) {
+      row.style.display = 'none';
+      document.getElementById('myListNavLink').style.display = 'none';
+    } else {
+      row.style.display = 'block';
+      document.getElementById('myListNavLink').style.display = 'flex';
+      container.innerHTML = '';
+      Object.values(myListShows).forEach(s => container.appendChild(makeCard(s, false)));
+    }
+  }
+
+  // ── POPULATE ROWS ──────────────────────────────────────
   function populateRow(rowId, shows, isContinue) {
     const container = document.getElementById('scroll-row-' + rowId);
     shows.forEach(s => container.appendChild(makeCard(s, isContinue)));
+    updateArrows(rowId);
   }
 
   populateRow('continue', continueWatching, true);
@@ -885,35 +700,182 @@
   populateRow('because', because, false);
   populateRow('picks', topPicks, false);
 
-  // ── SCROLL ARROWS ─────────────────────────────────────
-  window.scrollRow = function(rowId, dir) {
-    const el = document.getElementById('scroll-row-' + rowId.replace('row-',''));
+  // ── SCROLL ARROWS (hide at edges) ────────────────────
+  function updateArrows(rowId) {
+    const el = document.getElementById('scroll-row-' + rowId);
     if (!el) return;
-    const w = el.clientWidth;
-    el.scrollBy({ left: dir * w * 0.85, behavior: 'smooth' });
+    const wrap = el.closest('.row-scroll-wrap');
+    if (!wrap) return;
+    const leftArrow = wrap.querySelector('.scroll-arrow.left');
+    const rightArrow = wrap.querySelector('.scroll-arrow.right');
+    if (leftArrow) leftArrow.classList.toggle('hidden-arrow', el.scrollLeft <= 4);
+    if (rightArrow) rightArrow.classList.toggle('hidden-arrow', el.scrollLeft + el.clientWidth >= el.scrollWidth - 4);
+  }
+
+  ['continue','trending','because','picks'].forEach(rowId => {
+    const el = document.getElementById('scroll-row-' + rowId);
+    if (el) el.addEventListener('scroll', () => updateArrows(rowId), { passive: true });
+  });
+
+  window.scrollRow = function (rowId, dir) {
+    const el = document.getElementById('scroll-row-' + rowId);
+    if (!el) return;
+    el.scrollBy({ left: dir * el.clientWidth * 0.85, behavior: 'smooth' });
+    setTimeout(() => updateArrows(rowId), 400);
   };
 
-  // ── NAV SCROLL BEHAVIOUR ──────────────────────────────
-  window.addEventListener('scroll', function() {
-    const nav = document.getElementById('mainNav');
-    nav.classList.toggle('scrolled', window.scrollY > 60);
-  }, { passive: true });
-
-  // ── SEARCH EXPAND ─────────────────────────────────────
-  document.getElementById('searchToggle').addEventListener('click', function() {
+  // ── SEARCH FILTER ─────────────────────────────────────
+  document.getElementById('searchToggle').addEventListener('click', function () {
     const form = document.getElementById('searchForm');
     const input = document.getElementById('searchInput');
     const expanded = form.classList.toggle('expanded');
     this.setAttribute('aria-expanded', expanded);
-    if (expanded) { input.focus(); } else { input.value = ''; }
+    if (expanded) { input.focus(); } else { input.value = ''; applySearch(''); }
   });
 
-  document.addEventListener('keydown', function(e) {
+  document.getElementById('searchInput').addEventListener('input', function () {
+    applySearch(this.value.trim().toLowerCase());
+  });
+
+  function applySearch(query) {
+    ['continue','trending','because','picks'].forEach(rowId => {
+      const container = document.getElementById('scroll-row-' + rowId);
+      if (!container) return;
+      let visibleCount = 0;
+      container.querySelectorAll('.show-card').forEach(card => {
+        const title = card.dataset.title || '';
+        const genres = card.dataset.genres ? card.dataset.genres.toLowerCase() : '';
+        const matches = !query || title.includes(query) || genres.includes(query);
+        card.classList.toggle('filtered-out', !matches);
+        if (matches) visibleCount++;
+      });
+      const noMsg = document.getElementById('no-' + rowId);
+      if (noMsg) { noMsg.textContent = query && visibleCount === 0 ? `No results for "${query}"` : ''; noMsg.classList.toggle('show', query && visibleCount === 0); }
+    });
+  }
+
+  // ── PROFILE DROPDOWN ──────────────────────────────────
+  const avatar = document.getElementById('navAvatar');
+  const dropdown = document.getElementById('profileDropdown');
+
+  avatar.addEventListener('click', () => {
+    const open = dropdown.classList.toggle('open');
+    avatar.setAttribute('aria-expanded', open);
+  });
+
+  avatar.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); avatar.click(); } });
+
+  document.querySelectorAll('.pd-profile').forEach(p => {
+    p.addEventListener('click', () => {
+      const name = p.dataset.profile;
+      const initial = name[0];
+      avatar.textContent = initial;
+      document.getElementById('heroContent').querySelector && null;
+      dropdown.classList.remove('open');
+      // Update "Continue Watching" label
+      const cwLabel = document.querySelector('#row-continue .row-label');
+      if (cwLabel) cwLabel.childNodes[0].textContent = `Continue Watching for ${name} `;
+    });
+  });
+
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.nav-avatar-wrap')) {
+      dropdown.classList.remove('open');
+      avatar.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // ── VIDEO MODAL ───────────────────────────────────────
+  let videoPlaying = false;
+  let videoProgress = 0;
+  let videoInterval = null;
+  const TOTAL_SECS = 3134; // 52:14
+
+  function openVideoModal(title) {
+    document.getElementById('video-title').textContent = title.replace('\n', ' ');
+    document.getElementById('videoSpinner').style.display = 'block';
+    document.getElementById('videoOverlayPlay').style.opacity = '0';
+    document.getElementById('video-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    videoProgress = 0;
+    updateScrub();
+    // Fake buffering
+    setTimeout(() => {
+      document.getElementById('videoSpinner').style.display = 'none';
+      document.getElementById('videoOverlayPlay').style.opacity = '';
+    }, 1200);
+  }
+
+  window.closeVideoModal = function () {
+    document.getElementById('video-modal').classList.remove('open');
+    document.body.style.overflow = '';
+    clearInterval(videoInterval);
+    videoPlaying = false;
+    setPlayIcon(false);
+  };
+
+  document.getElementById('video-modal').addEventListener('click', function (e) {
+    if (e.target === this) closeVideoModal();
+  });
+
+  document.getElementById('videoScreen').addEventListener('click', () => {
+    if (document.getElementById('videoSpinner').style.display !== 'none') return;
+    videoPlaying = !videoPlaying;
+    setPlayIcon(videoPlaying);
+    if (videoPlaying) {
+      videoInterval = setInterval(() => {
+        videoProgress = Math.min(100, videoProgress + 100 / TOTAL_SECS);
+        updateScrub();
+        if (videoProgress >= 100) { clearInterval(videoInterval); videoPlaying = false; setPlayIcon(false); }
+      }, 1000);
+    } else {
+      clearInterval(videoInterval);
+    }
+  });
+
+  document.getElementById('playPauseBtn').addEventListener('click', () => {
+    document.getElementById('videoScreen').click();
+  });
+
+  document.getElementById('videoScrub').addEventListener('input', function () {
+    videoProgress = +this.value;
+    updateScrub();
+  });
+
+  function updateScrub() {
+    document.getElementById('scrubBar').style.width = videoProgress + '%';
+    document.getElementById('videoScrub').value = videoProgress;
+    const elapsed = Math.round(videoProgress / 100 * TOTAL_SECS);
+    const em = Math.floor(elapsed / 60);
+    const es = String(elapsed % 60).padStart(2, '0');
+    document.getElementById('videoTime').textContent = `${em}:${es} / 52:14`;
+  }
+
+  function setPlayIcon(playing) {
+    document.getElementById('playPauseIcon').innerHTML = playing
+      ? '<rect x="6" y="4" width="4" height="16" fill="currentColor"/><rect x="14" y="4" width="4" height="16" fill="currentColor"/>'
+      : '<polygon points="5,3 19,12 5,21" fill="currentColor" stroke="none"/>';
+  }
+
+  // Hero play button
+  document.getElementById('heroPlayBtn').addEventListener('click', function () {
+    openVideoModal(heroShows[heroIdx].title.replace('\n', ' '));
+  });
+
+  // ── NAV SCROLL ────────────────────────────────────────
+  window.addEventListener('scroll', function () {
+    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // ── ESCAPE ────────────────────────────────────────────
+  document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
+      closeVideoModal();
+      dropdown.classList.remove('open');
       const form = document.getElementById('searchForm');
       form.classList.remove('expanded');
-      document.getElementById('searchToggle').setAttribute('aria-expanded', 'false');
       document.getElementById('searchInput').value = '';
+      applySearch('');
     }
   });
 
@@ -928,6 +890,5 @@
   };
 </script>
 <script src="shared/disqus-config.js"></script>
-
 </body>
 </html>
