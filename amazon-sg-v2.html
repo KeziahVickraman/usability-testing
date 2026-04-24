@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amazon.sg — V2 Revised</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f3f3f3;
+      --white: #ffffff;
+      --orange: #ff9900;
+      --orange-hover: #e68a00;
+      --dark: #131921;
+      --dark2: #1f2b38;
+      --navy: #232f3e;
+      --teal: #37475a;
+      --text: #0f1111;
+      --muted: #565959;
+      --muted2: #767676;
+      --border: #d5d9d9;
+      --border2: #e7e7e7;
+      --price: #b12704;
+      --green: #007600;
+      --star: #ff9900;
+      --radius: 8px;
+      --shadow: 0 2px 8px rgba(0,0,0,0.1);
+      --shadow-hover: 0 4px 16px rgba(0,0,0,0.15);
+      --transition: 0.18s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
+
+    /* ── V2 BANNER ── */
+    .v2-banner {
+      background: linear-gradient(90deg, #0d1821 0%, #131921 100%);
+      border-bottom: 2px solid var(--orange);
+      padding: 0.55rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .v2-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--orange);
+      color: var(--dark);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.7rem;
+      border-radius: 20px;
+    }
+    .v2-banner-text { font-size: 0.78rem; color: rgba(255,255,255,0.6); }
+    .v2-banner-text strong { color: var(--orange); }
+    .v2-back {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: color var(--transition);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .v2-back:hover { color: var(--orange); }
+
+    /* ── HEADER ── */
+    .header { background: var(--dark); position: sticky; top: 0; z-index: 100; }
+    .header-main { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; height: 60px; }
+
+    .header-logo {
+      text-decoration: none; flex-shrink: 0; display: flex; align-items: center;
+      padding: 4px 8px; border: 2px solid transparent; border-radius: 3px;
+      transition: border-color var(--transition);
+    }
+    .header-logo:hover, .header-logo:focus-visible { border-color: var(--orange); }
+    .logo-text { font-size: 1.5rem; font-weight: 900; color: var(--white); letter-spacing: -0.03em; font-style: italic; }
+    .logo-sg { font-size: 0.7rem; font-weight: 700; color: var(--orange); margin-left: 2px; align-self: flex-end; margin-bottom: 4px; }
+
+    .header-location {
+      flex-shrink: 0; padding: 4px 8px; border: 2px solid transparent; border-radius: 3px;
+      cursor: pointer; transition: border-color var(--transition);
+      display: flex; align-items: flex-end; gap: 4px; min-width: 0;
+    }
+    .header-location:hover, .header-location:focus-visible { border-color: var(--orange); outline: none; }
+    .location-icon { color: var(--white); flex-shrink: 0; }
+    .location-text { display: flex; flex-direction: column; }
+    .location-label { font-size: 0.65rem; color: #ccc; line-height: 1; }
+    .location-value { font-size: 0.75rem; font-weight: 700; color: var(--white); line-height: 1; white-space: nowrap; }
+
+    /* SEARCH with autocomplete */
+    .header-search {
+      flex: 1; display: flex; min-width: 0; border-radius: 6px;
+      overflow: hidden; box-shadow: 0 0 0 2px transparent;
+      transition: box-shadow var(--transition); position: relative;
+    }
+    .header-search:focus-within { box-shadow: 0 0 0 3px var(--orange); }
+    .search-cat {
+      background: #f3f3f3; border: none; border-right: 1px solid var(--border);
+      padding: 0 0.6rem; font-size: 0.75rem; font-family: 'Inter', sans-serif;
+      color: var(--text); cursor: pointer; flex-shrink: 0; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 6px center; padding-right: 20px;
+    }
+    .search-input-wrap { flex: 1; position: relative; display: flex; }
+    .search-input {
+      flex: 1; border: none; padding: 0 0.75rem; font-size: 0.9rem;
+      font-family: 'Inter', sans-serif; color: var(--text); background: var(--white);
+      min-width: 0; outline: none;
+    }
+    .search-btn {
+      background: var(--orange); border: none; padding: 0 0.9rem; cursor: pointer;
+      color: var(--dark); display: flex; align-items: center;
+      transition: background var(--transition); flex-shrink: 0;
+    }
+    .search-btn:hover { background: var(--orange-hover); }
+
+    /* Autocomplete dropdown — max 5, grouped by category */
+    .autocomplete-drop {
+      position: absolute; top: 100%; left: 0; right: 0; background: var(--white);
+      border: 1px solid var(--border); border-top: none; border-radius: 0 0 6px 6px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12); z-index: 200; display: none;
+      overflow: hidden;
+    }
+    .autocomplete-drop.open { display: block; }
+    .autocomplete-group-label {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted2); padding: 0.5rem 0.75rem 0.2rem; background: #f8f8f8;
+    }
+    .autocomplete-item {
+      display: flex; align-items: center; gap: 0.6rem; padding: 0.55rem 0.75rem;
+      font-size: 0.85rem; cursor: pointer; transition: background 0.12s; min-height: 44px;
+    }
+    .autocomplete-item:hover, .autocomplete-item:focus { background: #f0f2f2; outline: none; }
+    .autocomplete-item svg { color: var(--muted2); flex-shrink: 0; }
+
+    /* ACCOUNT + CART */
+    .header-actions { display: flex; align-items: center; gap: 0.25rem; flex-shrink: 0; }
+    .header-btn {
+      padding: 4px 8px; border: 2px solid transparent; border-radius: 3px;
+      background: none; color: var(--white); cursor: pointer; font-family: 'Inter', sans-serif;
+      text-decoration: none; transition: border-color var(--transition);
+      display: flex; flex-direction: column; gap: 1px;
+    }
+    .header-btn:hover, .header-btn:focus-visible { border-color: var(--orange); outline: none; }
+    .header-btn .line1 { font-size: 0.62rem; color: #ccc; }
+    .header-btn .line2 { font-size: 0.82rem; font-weight: 700; white-space: nowrap; }
+    .cart-btn {
+      display: flex; align-items: center; gap: 6px; padding: 4px 8px;
+      border: 2px solid transparent; border-radius: 3px; background: none;
+      color: var(--white); cursor: pointer; text-decoration: none;
+      transition: border-color var(--transition);
+    }
+    .cart-btn:hover, .cart-btn:focus-visible { border-color: var(--orange); outline: none; }
+    .cart-icon { position: relative; }
+    .cart-badge {
+      position: absolute; top: -8px; right: -6px; background: var(--orange);
+      color: var(--dark); border-radius: 50%; width: 18px; height: 18px;
+      font-size: 0.65rem; font-weight: 800; display: flex; align-items: center; justify-content: center;
+    }
+    .cart-label { font-size: 0.82rem; font-weight: 700; }
+
+    /* ── SECONDARY NAV — V2: max 5 categories + "All Categories" dropdown ── */
+    .secondary-nav {
+      background: var(--navy); padding: 0 1rem; display: flex; align-items: center;
+      gap: 0; overflow-x: auto; scrollbar-width: none; height: 38px; position: relative;
+    }
+    .secondary-nav::-webkit-scrollbar { display: none; }
+    .sec-nav-link {
+      color: var(--white); text-decoration: none; font-size: 0.8rem; font-weight: 500;
+      padding: 0 0.75rem; height: 38px; display: flex; align-items: center;
+      white-space: nowrap; border: 1px solid transparent; border-radius: 2px;
+      transition: border-color var(--transition);
+    }
+    .sec-nav-link:hover, .sec-nav-link:focus-visible { border-color: var(--white); outline: none; }
+    .sec-nav-link.highlight { color: var(--orange); font-weight: 700; }
+    .sec-nav-link.prime { color: #00a8e1; font-weight: 700; }
+
+    /* All Categories dropdown */
+    .all-cat-wrap { position: relative; }
+    .all-cat-btn {
+      display: flex; align-items: center; gap: 0.35rem;
+      color: var(--white); background: none; border: 1px solid transparent;
+      border-radius: 2px; padding: 0 0.75rem; height: 38px;
+      font-size: 0.8rem; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif;
+      white-space: nowrap; transition: border-color var(--transition);
+    }
+    .all-cat-btn:hover, .all-cat-btn:focus-visible { border-color: var(--white); outline: none; }
+    .all-cat-drop {
+      position: absolute; top: 100%; left: 0; background: var(--white); min-width: 220px;
+      border: 1px solid var(--border); border-radius: 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      z-index: 200; display: none; padding: 0.4rem 0;
+    }
+    .all-cat-drop.open { display: block; }
+    .all-cat-drop a {
+      display: block; padding: 0.55rem 1.1rem; font-size: 0.83rem; color: var(--text);
+      text-decoration: none; transition: background 0.12s; min-height: 44px;
+      display: flex; align-items: center;
+    }
+    .all-cat-drop a:hover { background: #f0f2f2; }
+
+    /* ── HERO SECTION — V2: 1 main hero + 2 secondary promo tiles ── */
+    .hero-section {
+      display: grid; grid-template-columns: 2fr 1fr; gap: 0;
+      max-height: 380px; overflow: hidden;
+    }
+    .hero-main {
+      position: relative; min-height: 300px;
+      display: flex; align-items: center; padding: 3rem 8%;
+      overflow: hidden;
+      background: linear-gradient(135deg, #131921 0%, #1f3a5c 50%, #004b8c 100%);
+    }
+    .hero-main::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 70%, rgba(255,255,255,0.08), transparent 60%);
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 480px; }
+    .hero-tag {
+      display: inline-block; background: var(--orange); color: var(--dark);
+      font-size: 0.65rem; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 3px; margin-bottom: 0.75rem;
+    }
+    .hero-title {
+      font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800;
+      color: var(--white); line-height: 1.1; margin-bottom: 0.65rem;
+    }
+    .hero-sub { font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 1.25rem; line-height: 1.5; }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 0.5rem; background: var(--orange);
+      color: var(--dark); border: none; border-radius: var(--radius);
+      padding: 0.65rem 1.4rem; font-size: 0.875rem; font-weight: 700;
+      cursor: pointer; transition: background var(--transition), transform var(--transition);
+      font-family: 'Inter', sans-serif;
+    }
+    .hero-cta:hover { background: var(--orange-hover); transform: translateY(-1px); }
+
+    .hero-tiles { display: flex; flex-direction: column; }
+    .hero-tile {
+      flex: 1; padding: 1.5rem 1.25rem; display: flex; flex-direction: column;
+      justify-content: center; cursor: pointer; transition: filter var(--transition);
+    }
+    .hero-tile:hover { filter: brightness(1.08); }
+    .hero-tile-1 { background: linear-gradient(135deg, #1a0800 0%, #cc4500 100%); }
+    .hero-tile-2 { background: linear-gradient(135deg, #001a0d 0%, #006640 100%); border-top: 1px solid rgba(255,255,255,0.1); }
+    .hero-tile-tag { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 0.3rem; }
+    .hero-tile-title { font-size: 1rem; font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: 0.4rem; }
+    .hero-tile-cta { font-size: 0.75rem; font-weight: 600; color: var(--orange); }
+
+    /* ── MAIN CONTENT ── */
+    main { max-width: 1440px; margin: 0 auto; padding: 1rem 1rem; }
+
+    /* ── FILTER PILLS — V2: unified pill-only filter pattern ── */
+    .filter-pills-wrap {
+      display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+    }
+    .filter-label { font-size: 0.75rem; font-weight: 600; color: var(--muted); margin-right: 0.25rem; white-space: nowrap; }
+    .filter-pill {
+      padding: 0.3rem 0.85rem; border-radius: 20px; border: 1px solid var(--border);
+      background: var(--white); color: var(--text); font-size: 0.78rem; font-weight: 500;
+      cursor: pointer; white-space: nowrap; transition: all 0.15s;
+      font-family: 'Inter', sans-serif; min-height: 34px; display: flex; align-items: center;
+    }
+    .filter-pill:hover { border-color: var(--orange); color: var(--dark); }
+    .filter-pill.active { background: var(--orange); border-color: var(--orange); color: var(--dark); font-weight: 700; }
+    .filter-pill:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+    /* ── PRODUCT SECTION ── */
+    .product-section {
+      background: var(--white); border-radius: var(--radius);
+      padding: 1.25rem; margin-bottom: 1rem; box-shadow: var(--shadow);
+    }
+    .section-header {
+      display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.75rem;
+    }
+    .section-header h2 { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+    .section-see-more {
+      font-size: 0.8rem; color: #007185; text-decoration: none; font-weight: 500; white-space: nowrap;
+    }
+    .section-see-more:hover { color: #c7511f; text-decoration: underline; }
+
+    .product-scroll-wrap { position: relative; }
+    .product-scroll {
+      display: flex; gap: 0.875rem; overflow-x: auto; scroll-snap-type: x mandatory;
+      scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth;
+      padding: 0.25rem 0 0.5rem;
+    }
+    .product-scroll::-webkit-scrollbar { display: none; }
+
+    .prod-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 36px; height: calc(100% - 0.5rem);
+      background: rgba(255,255,255,0.96); border: 1px solid var(--border);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      z-index: 5; font-size: 1.2rem; color: var(--text); opacity: 0;
+      transition: opacity var(--transition), box-shadow var(--transition); border-radius: 4px;
+    }
+    .product-scroll-wrap:hover .prod-arrow { opacity: 1; }
+    .prod-arrow.left  { left: -1px;  box-shadow:  4px 0 12px rgba(0,0,0,0.12); }
+    .prod-arrow.right { right: -1px; box-shadow: -4px 0 12px rgba(0,0,0,0.12); }
+    .prod-arrow:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.2); }
+
+    /* ── PRODUCT CARD — V2: unified structure, delivery before Prime, Buy Now button ── */
+    .prod-card {
+      flex: 0 0 185px; scroll-snap-align: start;
+      background: var(--white); border: 1px solid var(--border2); border-radius: var(--radius);
+      padding: 0.875rem; display: flex; flex-direction: column; gap: 0.4rem;
+      cursor: pointer; transition: box-shadow var(--transition), border-color var(--transition);
+      position: relative; overflow: hidden;
+    }
+    .prod-card:hover { box-shadow: var(--shadow-hover); border-color: var(--border); }
+    .prod-card:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+    .prod-badge {
+      position: absolute; top: 8px; left: 8px;
+      background: var(--price); color: var(--white); font-size: 0.62rem; font-weight: 700;
+      padding: 0.15rem 0.45rem; border-radius: 2px; letter-spacing: 0.04em; text-transform: uppercase; z-index: 2;
+    }
+    /* V2: "Deal ends today" badge instead of countdown */
+    .deal-badge {
+      position: absolute; top: 8px; right: 8px;
+      background: #e47911; color: var(--white); font-size: 0.58rem; font-weight: 700;
+      padding: 0.15rem 0.4rem; border-radius: 2px; letter-spacing: 0.02em; z-index: 2;
+    }
+    .prod-badge.prime-badge { background: #00a8e1; }
+
+    .prod-img {
+      aspect-ratio: 1; border-radius: 6px; display: flex; align-items: center;
+      justify-content: center; font-size: 2.5rem; background: #f8f8f8;
+      margin-bottom: 0.15rem; transition: transform 0.25s ease;
+    }
+    .prod-card:hover .prod-img { transform: scale(1.03); }
+    .prod-title {
+      font-size: 0.8rem; font-weight: 500; color: var(--text); line-height: 1.35;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .prod-stars { display: flex; align-items: center; gap: 4px; }
+    .stars { display: flex; gap: 1px; color: var(--star); font-size: 0.75rem; }
+    .review-count { font-size: 0.7rem; color: #007185; }
+    .prod-price-row { display: flex; align-items: baseline; gap: 0.3rem; flex-wrap: wrap; }
+    .prod-price { font-size: 1rem; font-weight: 700; color: var(--price); }
+    .prod-price-orig { font-size: 0.72rem; color: var(--muted2); text-decoration: line-through; }
+    .prod-discount { font-size: 0.68rem; font-weight: 700; color: var(--price); }
+
+    /* V2: delivery date BEFORE Prime label */
+    .prod-delivery { font-size: 0.7rem; color: var(--green); font-weight: 500; }
+    .prod-prime { display: flex; align-items: center; gap: 4px; font-size: 0.68rem; color: #00a8e1; font-weight: 600; }
+
+    .add-to-cart {
+      background: var(--orange); color: var(--dark); border: none; border-radius: 20px;
+      padding: 0.42rem 0.75rem; font-size: 0.78rem; font-weight: 700;
+      cursor: pointer; transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      font-family: 'Inter', sans-serif; width: 100%; margin-top: auto;
+    }
+    .add-to-cart:hover { background: var(--orange-hover); box-shadow: 0 2px 8px rgba(255,153,0,0.4); }
+    .add-to-cart:active { transform: scale(0.97); }
+    .add-to-cart.added { background: #067d62; color: var(--white); }
+
+    /* V2: Buy Now — ghost/outlined, same width */
+    .buy-now {
+      background: transparent; color: var(--dark); border: 1.5px solid var(--orange);
+      border-radius: 20px; padding: 0.38rem 0.75rem; font-size: 0.78rem; font-weight: 700;
+      cursor: pointer; transition: background var(--transition), color var(--transition);
+      font-family: 'Inter', sans-serif; width: 100%;
+    }
+    .buy-now:hover { background: #fff8ee; }
+    .buy-now:active { transform: scale(0.97); }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+      background: var(--dark); color: var(--white); font-size: 0.82rem; font-weight: 500;
+      padding: 0.65rem 1.4rem; border-radius: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+      z-index: 500; opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+      white-space: nowrap;
+    }
+    .toast.show { opacity: 1; }
+
+    /* ── PRODUCT DETAIL MODAL — V2: progressive disclosure ── */
+    #prod-modal {
+      display: none; position: fixed; inset: 0; z-index: 400;
+      background: rgba(0,0,0,0.5); align-items: center; justify-content: center;
+    }
+    #prod-modal.open { display: flex; }
+    .modal-panel {
+      background: var(--white); border-radius: 12px; width: min(520px, 94vw);
+      max-height: 90vh; overflow-y: auto; box-shadow: 0 24px 80px rgba(0,0,0,0.3);
+      animation: modalIn 0.2s ease;
+    }
+    @keyframes modalIn { from { opacity: 0; transform: scale(0.96) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.25rem 0.75rem; border-bottom: 1px solid var(--border2);
+    }
+    .modal-title { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .modal-close {
+      background: none; border: none; cursor: pointer; color: var(--muted); font-size: 1.4rem;
+      line-height: 1; transition: color 0.15s; min-width: 44px; min-height: 44px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .modal-close:hover { color: var(--text); }
+    .modal-body { padding: 1.25rem; }
+    .modal-img {
+      aspect-ratio: 1; max-width: 180px; margin: 0 auto 1.25rem; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center; font-size: 4rem;
+      background: #f8f8f8;
+    }
+    .modal-price-row { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+    .modal-price { font-size: 1.5rem; font-weight: 800; color: var(--price); }
+    .modal-price-orig { font-size: 0.9rem; color: var(--muted2); text-decoration: line-through; }
+    .modal-discount { font-size: 0.85rem; font-weight: 700; color: var(--price); }
+    .modal-stars { display: flex; align-items: center; gap: 6px; margin-bottom: 0.75rem; }
+    .modal-stars .stars { font-size: 0.9rem; }
+    .modal-stars .review-count { font-size: 0.78rem; }
+    .modal-actions { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+    .modal-add-to-cart {
+      background: var(--orange); color: var(--dark); border: none; border-radius: 20px;
+      padding: 0.65rem 1rem; font-size: 0.9rem; font-weight: 700;
+      cursor: pointer; font-family: 'Inter', sans-serif; width: 100%;
+      transition: background var(--transition);
+    }
+    .modal-add-to-cart:hover { background: var(--orange-hover); }
+    .modal-buy-now {
+      background: transparent; color: var(--dark); border: 1.5px solid var(--orange);
+      border-radius: 20px; padding: 0.6rem 1rem; font-size: 0.9rem; font-weight: 700;
+      cursor: pointer; font-family: 'Inter', sans-serif; width: 100%;
+      transition: background var(--transition);
+    }
+    .modal-buy-now:hover { background: #fff8ee; }
+
+    /* Progressive disclosure — full details hidden until expanded */
+    .modal-details-toggle {
+      background: none; border: none; color: #007185; font-size: 0.83rem; font-weight: 600;
+      cursor: pointer; font-family: 'Inter', sans-serif; padding: 0; display: flex;
+      align-items: center; gap: 0.35rem; transition: color 0.15s;
+    }
+    .modal-details-toggle:hover { color: #c7511f; }
+    .modal-full-details {
+      display: none; margin-top: 0.75rem; padding-top: 0.75rem;
+      border-top: 1px solid var(--border2); font-size: 0.83rem; color: var(--muted);
+      line-height: 1.7;
+    }
+    .modal-full-details.open { display: block; }
+    .modal-full-details dt { font-weight: 600; color: var(--text); margin-top: 0.4rem; }
+    .modal-full-details dd { margin-left: 0.75rem; }
+
+    /* ── SEARCH RESULTS PAGE ── */
+    #searchResultsPage { display: none; }
+    #searchResultsPage.open { display: block; }
+    .sr-header {
+      max-width: 1440px; margin: 0 auto; padding: 0.75rem 1rem 0;
+      display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+    }
+    .sr-back-btn {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      background: none; border: 1px solid var(--border); border-radius: 6px;
+      padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; color: var(--text);
+      cursor: pointer; font-family: 'Inter', sans-serif; transition: background var(--transition);
+      min-height: 36px;
+    }
+    .sr-back-btn:hover { background: #e7e7e7; }
+    .sr-query-label { font-size: 0.85rem; color: var(--muted); }
+    .sr-query-label strong { color: var(--text); }
+    .sr-count { font-size: 0.78rem; color: var(--muted); margin-left: auto; white-space: nowrap; }
+    .sr-count strong { color: var(--text); }
+    .sr-filters-wrap { max-width: 1440px; margin: 0 auto; padding: 0.75rem 1rem 0; }
+    .sr-filter-group { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+    .sr-filter-group-label { font-size: 0.7rem; font-weight: 700; color: var(--muted); min-width: 80px; flex-shrink: 0; text-transform: uppercase; letter-spacing: 0.06em; }
+    .sr-sort-wrap { max-width: 1440px; margin: 0 auto; padding: 0.5rem 1rem 0.75rem; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; border-bottom: 1px solid var(--border2); }
+    .sr-sort-label { font-size: 0.7rem; font-weight: 700; color: var(--muted); flex-shrink: 0; text-transform: uppercase; letter-spacing: 0.06em; }
+    /* Reuse filter-pill for search result filters */
+    .sr-results-wrap { max-width: 1440px; margin: 0 auto; padding: 1rem 1rem 2rem; }
+    .sr-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .sr-card {
+      background: var(--white); border: 1px solid var(--border2); border-radius: var(--radius);
+      padding: 1rem; display: flex; flex-direction: column; gap: 0.4rem;
+      cursor: pointer; transition: box-shadow var(--transition), border-color var(--transition);
+      position: relative;
+    }
+    .sr-card:hover { box-shadow: var(--shadow-hover); border-color: var(--border); }
+    .sr-card.hidden { display: none; }
+    .sr-card-img {
+      aspect-ratio: 4/3; border-radius: 6px; background: #f0f2f5;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 0.25rem; font-size: 2rem; color: var(--muted2); font-weight: 900;
+      flex-direction: column; gap: 0.25rem; overflow: hidden; transition: transform 0.25s ease;
+    }
+    .sr-card:hover .sr-card-img { transform: scale(1.02); }
+    .sr-card-img-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.06em; color: var(--muted2); text-transform: uppercase; }
+    .sr-card-title { font-size: 0.82rem; font-weight: 500; color: var(--text); line-height: 1.35;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .sr-card-price { font-size: 1.05rem; font-weight: 700; color: var(--price); }
+    .sr-card-stars { display: flex; align-items: center; gap: 4px; font-size: 0.72rem; }
+    .sr-card-stars .stars { font-size: 0.78rem; }
+    .sr-card-delivery { font-size: 0.7rem; color: var(--green); font-weight: 500; }
+    .sr-card-prime { font-size: 0.68rem; color: #00a8e1; font-weight: 600; }
+    .sr-add-to-cart {
+      background: var(--orange); color: var(--dark); border: none; border-radius: 20px;
+      padding: 0.42rem 0.75rem; font-size: 0.78rem; font-weight: 700; cursor: pointer;
+      font-family: 'Inter', sans-serif; width: 100%; margin-top: auto;
+      transition: background var(--transition);
+    }
+    .sr-add-to-cart:hover { background: var(--orange-hover); }
+    .sr-add-to-cart.added { background: #067d62; color: var(--white); }
+    .sr-buy-now {
+      background: transparent; color: var(--dark); border: 1.5px solid var(--orange);
+      border-radius: 20px; padding: 0.38rem 0.75rem; font-size: 0.78rem; font-weight: 700;
+      cursor: pointer; font-family: 'Inter', sans-serif; width: 100%;
+      transition: background var(--transition);
+    }
+    .sr-buy-now:hover { background: #fff8ee; }
+    .sr-no-results { display: none; color: var(--muted); font-size: 0.9rem; padding: 2rem 0; }
+    .sr-no-results.show { display: block; }
+
+    /* ── FOOTER ── */
+    .footer-back {
+      background: #37475a; text-align: center; padding: 0.9rem;
+      cursor: pointer; transition: background var(--transition);
+    }
+    .footer-back:hover { background: #4a5d72; }
+    .footer-back a { color: var(--white); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
+    .footer-main { background: var(--dark2); padding: 2rem 4%; }
+    .footer-cols {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;
+      max-width: 1200px; margin: 0 auto 1.5rem;
+    }
+    .footer-col h3 { color: var(--white); font-size: 0.875rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.35rem; }
+    .footer-col ul a { color: #ccc; text-decoration: none; font-size: 0.8rem; transition: color var(--transition); }
+    .footer-col ul a:hover { color: var(--white); }
+    .footer-bottom {
+      background: var(--dark); text-align: center; padding: 1rem; font-size: 0.75rem;
+      color: var(--muted); display: flex; align-items: center; justify-content: center;
+      gap: 0.5rem; flex-wrap: wrap;
+    }
+    .footer-bottom a { color: var(--muted); text-decoration: none; }
+    .footer-bottom a:hover { text-decoration: underline; }
+
+    /* ── DISQUS ── */
+    .disqus-section {
+      background: var(--white); border-radius: var(--radius);
+      padding: 1.5rem; margin-bottom: 1rem; box-shadow: var(--shadow);
+    }
+    .disqus-divider {
+      display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;
+    }
+    .disqus-divider::before, .disqus-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .disqus-divider span { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    #disqus_thread { min-height: 200px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .header-main { flex-wrap: wrap; height: auto; padding: 0.5rem 0.75rem; gap: 0.5rem; }
+      .header-logo { order: 1; }
+      .cart-btn { order: 2; margin-left: auto; }
+      .header-location { order: 3; }
+      .header-search { order: 4; flex-basis: 100%; }
+      .header-actions { order: 5; gap: 0; }
+      .hero-section { grid-template-columns: 1fr; max-height: none; }
+      .hero-tiles { flex-direction: row; }
+      .footer-cols { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .hero-main { padding: 2rem 4%; min-height: 220px; }
+      .hero-tiles { flex-direction: row; }
+      .hero-tile { padding: 1rem; }
+      .prod-card { flex: 0 0 155px; }
+      .footer-cols { grid-template-columns: 1fr; }
+      .header-btn .line1, .header-btn .line2 { display: none; }
+    }
+    @media (max-width: 375px) {
+      .search-cat { display: none; }
+      .prod-card { flex: 0 0 140px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- V2 BANNER -->
+<div class="v2-banner">
+  <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
+    <span class="v2-badge">&#9654; V2 &mdash; Revised</span>
+    <span class="v2-banner-text">Improved based on <strong>usability feedback</strong> &mdash; decluttered layout, unified filters, consistent product cards &amp; Buy Now flow</span>
+  </div>
+  <a href="amazon-sg.html" class="v2-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    View Original
+  </a>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-main">
+
+    <a href="#" class="header-logo" aria-label="Amazon Singapore home">
+      <span class="logo-text">amazon</span>
+      <span class="logo-sg">.sg</span>
+    </a>
+
+    <div class="header-location" role="button" tabindex="0" aria-label="Deliver to Singapore 018956">
+      <svg class="location-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+        <circle cx="12" cy="9" r="2.5"/>
+      </svg>
+      <div class="location-text">
+        <span class="location-label">Deliver to</span>
+        <span class="location-value">Singapore 018956</span>
+      </div>
+    </div>
+
+    <!-- Search with autocomplete -->
+    <div class="header-search">
+      <select class="search-cat" aria-label="Search category" id="searchCat">
+        <option>All</option>
+        <option>Electronics</option>
+        <option>Fashion</option>
+        <option>Home &amp; Kitchen</option>
+        <option>Groceries</option>
+      </select>
+      <div class="search-input-wrap">
+        <input class="search-input" id="searchInput" type="search" placeholder="Search Amazon.sg" aria-label="Search Amazon.sg" autocomplete="off" />
+        <div class="autocomplete-drop" id="autocompleteDrop" role="listbox" aria-label="Search suggestions"></div>
+      </div>
+      <button class="search-btn" id="headerSearchBtn" type="button" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="header-actions">
+      <a href="#" class="header-btn" aria-label="Hello, sign in. Account & Lists">
+        <span class="line1">Hello, sign in</span>
+        <span class="line2">Account &amp; Lists &#9660;</span>
+      </a>
+      <a href="#" class="header-btn" aria-label="Returns & Orders">
+        <span class="line1">Returns</span>
+        <span class="line2">&amp; Orders</span>
+      </a>
+      <a href="#" class="cart-btn" aria-label="Shopping cart with 3 items">
+        <div class="cart-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span class="cart-badge" id="cartBadge" aria-label="3 items in cart">3</span>
+        </div>
+        <span class="cart-label">Cart</span>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- V2 Secondary Nav: max 5 categories + All Categories dropdown (Miller's Law) -->
+  <nav class="secondary-nav" aria-label="Product categories">
+    <a href="#" class="sec-nav-link">&#9776; All</a>
+    <a href="#" class="sec-nav-link highlight">Today's Deals</a>
+    <a href="#" class="sec-nav-link prime">Prime</a>
+    <a href="#" class="sec-nav-link">Electronics</a>
+    <a href="#" class="sec-nav-link">Fashion</a>
+    <!-- All Categories dropdown for remaining items -->
+    <div class="all-cat-wrap">
+      <button class="all-cat-btn" id="allCatBtn" aria-haspopup="true" aria-expanded="false">
+        All Categories
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="all-cat-drop" id="allCatDrop">
+        <a href="#">Home &amp; Kitchen</a>
+        <a href="#">Groceries</a>
+        <a href="#">Books</a>
+        <a href="#">Toys &amp; Games</a>
+        <a href="#">Sports &amp; Outdoors</a>
+        <a href="#">Health &amp; Beauty</a>
+        <a href="#">Vouchers</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- V2 HERO: 1 main featured promo + 2 secondary promo tiles (no auto-carousel) -->
+<div class="hero-section" role="region" aria-label="Featured promotions">
+  <div class="hero-main">
+    <div class="hero-content">
+      <span class="hero-tag">Prime Day</span>
+      <h2 class="hero-title">Exclusive Deals<br/>for Members</h2>
+      <p class="hero-sub">Up to 50% off across Electronics, Fashion, and Home. Free delivery on orders above S$40.</p>
+      <button class="hero-cta">Shop Prime Deals &rarr;</button>
+    </div>
+  </div>
+  <div class="hero-tiles">
+    <div class="hero-tile hero-tile-1" role="button" tabindex="0" aria-label="Made in Singapore promotion">
+      <div class="hero-tile-tag">Support Local</div>
+      <div class="hero-tile-title">Made in Singapore</div>
+      <div class="hero-tile-cta">Explore Local Brands &rarr;</div>
+    </div>
+    <div class="hero-tile hero-tile-2" role="button" tabindex="0" aria-label="Groceries delivered today">
+      <div class="hero-tile-tag">Fresh &amp; Fast</div>
+      <div class="hero-tile-title">Groceries Delivered Today</div>
+      <div class="hero-tile-cta">Order Groceries &rarr;</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- Deals of the Day — V2: 4 cards max, unified pill filters, no countdown timers -->
+  <div class="product-section">
+    <div class="section-header">
+      <h2>Deals of the Day</h2>
+      <a href="#" class="section-see-more">See all deals &rarr;</a>
+    </div>
+    <!-- V2: pill-only filter, consistent across all sections -->
+    <div class="filter-pills-wrap" id="dealFilters">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-pill active" data-filter="all">All</button>
+      <button class="filter-pill" data-filter="electronics">Electronics</button>
+      <button class="filter-pill" data-filter="home">Home</button>
+      <button class="filter-pill" data-filter="health">Health</button>
+    </div>
+    <div class="product-scroll-wrap">
+      <button class="prod-arrow left" aria-label="Scroll left" onclick="scrollProducts('deals', -1)">&#8249;</button>
+      <div class="product-scroll" id="scroll-deals"></div>
+      <button class="prod-arrow right" aria-label="Scroll right" onclick="scrollProducts('deals', 1)">&#8250;</button>
+    </div>
+  </div>
+
+  <!-- Local Brands — V2: unified pill filters -->
+  <div class="product-section">
+    <div class="section-header">
+      <h2>Local Brands We Love</h2>
+      <a href="#" class="section-see-more">Explore local brands &rarr;</a>
+    </div>
+    <div class="filter-pills-wrap" id="localFilters">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-pill active" data-filter="all">All</button>
+      <button class="filter-pill" data-filter="food">Food</button>
+      <button class="filter-pill" data-filter="beauty">Beauty</button>
+      <button class="filter-pill" data-filter="fashion">Fashion</button>
+    </div>
+    <div class="product-scroll-wrap">
+      <button class="prod-arrow left" aria-label="Scroll left" onclick="scrollProducts('local', -1)">&#8249;</button>
+      <div class="product-scroll" id="scroll-local"></div>
+      <button class="prod-arrow right" aria-label="Scroll right" onclick="scrollProducts('local', 1)">&#8250;</button>
+    </div>
+  </div>
+
+  <!-- Disqus -->
+  <div class="disqus-section">
+    <div class="disqus-divider"><span>Feedback &amp; Comments</span></div>
+    <div id="disqus_thread"></div>
+  </div>
+
+</main>
+
+<!-- SEARCH RESULTS PAGE -->
+<div id="searchResultsPage">
+  <div class="sr-header">
+    <button class="sr-back-btn" onclick="closeSearchResults()" aria-label="Back to homepage">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Back
+    </button>
+    <span class="sr-query-label">Results for <strong id="srQueryLabel">"Dell 27 inch monitor"</strong></span>
+    <span class="sr-count" id="srCount"><strong id="srCountNum">6</strong> results</span>
+  </div>
+
+  <div class="sr-filters-wrap" id="srFiltersWrap">
+    <!-- Filter groups injected by JS -->
+  </div>
+
+  <div class="sr-sort-wrap" id="srSortWrap">
+    <!-- Sort pills injected by JS -->
+  </div>
+
+  <div class="sr-results-wrap">
+    <div class="sr-grid" id="srGrid"></div>
+    <div class="sr-no-results" id="srNoResults">No results match the selected filters. Try clearing one or more filters.</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-back">
+  <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Back to top</a>
+</div>
+<div class="footer-main">
+  <div class="footer-cols">
+    <div class="footer-col">
+      <h3>Get to Know Us</h3>
+      <ul>
+        <li><a href="#">About Amazon</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Amazon Cares</a></li>
+        <li><a href="#">Press Releases</a></li>
+        <li><a href="#">Amazon Science</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Make Money with Us</h3>
+      <ul>
+        <li><a href="#">Sell on Amazon</a></li>
+        <li><a href="#">Amazon Associates</a></li>
+        <li><a href="#">Fulfillment by Amazon</a></li>
+        <li><a href="#">Advertise Your Products</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Amazon Payment Methods</h3>
+      <ul>
+        <li><a href="#">Credit and Debit Cards</a></li>
+        <li><a href="#">PayNow &amp; PayLah!</a></li>
+        <li><a href="#">Amazon Gift Cards</a></li>
+        <li><a href="#">NETS</a></li>
+        <li><a href="#">Amazon Pay</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Let Us Help You</h3>
+      <ul>
+        <li><a href="#">Your Account</a></li>
+        <li><a href="#">Your Orders</a></li>
+        <li><a href="#">Delivery Rates &amp; Policies</a></li>
+        <li><a href="#">Returns &amp; Replacements</a></li>
+        <li><a href="#">Help</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="footer-bottom">
+  <span>amazon<strong>.sg</strong></span>
+  <span>|</span>
+  <a href="#">Conditions of Use</a>
+  <span>|</span>
+  <a href="#">Privacy Notice</a>
+  <span>|</span>
+  <span>&copy; 2024 Amazon.com, Inc. or its affiliates. Prototype only.</span>
+  <span>|</span>
+  <a href="index.html">Back to prototypes</a>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- PRODUCT DETAIL MODAL — V2: progressive disclosure -->
+<div id="prod-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-panel">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle"></div>
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-img" id="modalImg"></div>
+      <div class="modal-price-row">
+        <span class="modal-price" id="modalPrice"></span>
+        <span class="modal-price-orig" id="modalOrig"></span>
+        <span class="modal-discount" id="modalDiscount"></span>
+      </div>
+      <!-- V2: delivery date before Prime -->
+      <div class="prod-delivery" id="modalDelivery" style="margin-bottom:0.35rem;font-size:0.82rem;"></div>
+      <div class="prod-prime" id="modalPrime" style="margin-bottom:0.75rem;font-size:0.78rem;"></div>
+      <div class="modal-stars">
+        <span class="stars" id="modalStars"></span>
+        <span class="review-count" id="modalReviews"></span>
+      </div>
+      <!-- V2: Add to Cart and Buy Now first, specs behind "See full details" -->
+      <div class="modal-actions">
+        <button class="modal-add-to-cart" id="modalAddCart">Add to Cart</button>
+        <button class="modal-buy-now" id="modalBuyNow">Buy Now</button>
+      </div>
+      <button class="modal-details-toggle" id="detailsToggle" aria-expanded="false" onclick="toggleDetails()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9" id="toggleChevron"/></svg>
+        See full details
+      </button>
+      <dl class="modal-full-details" id="modalFullDetails">
+        <dt>Brand</dt><dd id="modalBrand"></dd>
+        <dt>Availability</dt><dd>In stock — ready to ship</dd>
+        <dt>Ships from</dt><dd>Amazon SG Fulfilment Centre</dd>
+        <dt>Return policy</dt><dd>Free returns within 30 days</dd>
+        <dt>Sold by</dt><dd>Amazon.sg</dd>
+      </dl>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ── DATA ──────────────────────────────────────────────
+  // V2: 4 deals (not 5), "Deal ends today" badge (no countdown), delivery before Prime
+  var deals = [
+    { title: 'Xiaomi Redmi Buds 5 Pro ANC Wireless Earbuds', brand: 'Xiaomi', price: 49.90, orig: 89.90, discount: 44, rating: 4.4, reviews: 2841, deal: true, prime: true, delivery: 'Get it tomorrow', icon: '🎧', bg: '#f0f4ff', category: 'electronics' },
+    { title: 'Philips Airfryer XXL HD9860 6.2L', brand: 'Philips', price: 169, orig: 299, discount: 43, rating: 4.5, reviews: 5620, deal: true, prime: true, delivery: 'Get it by Saturday', icon: '🍟', bg: '#fff8f0', category: 'home' },
+    { title: 'Dyson V8 Cordless Vacuum Cleaner', brand: 'Dyson', price: 499, orig: 699, discount: 29, rating: 4.6, reviews: 9873, deal: true, prime: true, delivery: 'Get it tomorrow', icon: '🌀', bg: '#fff0f8', category: 'home' },
+    { title: 'Preethi Mixer Grinder 750W', brand: 'Preethi', price: 89, orig: 129, discount: 31, rating: 4.2, reviews: 788, deal: true, prime: false, delivery: 'Get it in 2 days', icon: '🥤', bg: '#f0f8ff', category: 'health' },
+  ];
+
+  var localBrands = [
+    { title: 'BreadTalk Signature Pandan Kaya Toast Kit', brand: 'BreadTalk', price: 12.90, orig: null, discount: null, rating: 4.7, reviews: 432, deal: false, prime: false, delivery: 'Free delivery above S$40', icon: '🍞', bg: '#fffbf0', category: 'food' },
+    { title: 'Tiger Balm Ultra Strength Pain Relief Balm 50g', brand: 'Tiger Balm', price: 9.50, orig: 12.50, discount: 24, rating: 4.8, reviews: 11240, deal: false, prime: true, delivery: 'Get it tomorrow', icon: '🐯', bg: '#fff8f0', category: 'beauty' },
+    { title: 'TWG Tea Singapore Breakfast Tea 15 Sachets', brand: 'TWG Tea', price: 22.80, orig: null, discount: null, rating: 4.6, reviews: 2109, deal: false, prime: true, delivery: 'Get it tomorrow', icon: '🍵', bg: '#f0fff4', category: 'food' },
+    { title: 'Love, Bonito Relaxed Linen Blazer', brand: 'Love, Bonito', price: 89, orig: 119, discount: 25, rating: 4.4, reviews: 567, deal: false, prime: false, delivery: 'Get it in 2 days', icon: '👔', bg: '#f8f0ff', category: 'fashion' },
+  ];
+
+  // ── AUTOCOMPLETE — max 5 suggestions, grouped by category ──
+  var suggestions = [
+    { text: 'airfryer',             cat: 'Electronics' },
+    { text: 'wireless earbuds',     cat: 'Electronics' },
+    { text: 'tiger balm',           cat: 'Health & Beauty' },
+    { text: 'TWG tea singapore',    cat: 'Groceries' },
+    { text: 'dyson vacuum',         cat: 'Home & Kitchen' },
+    { text: 'breadtalk kaya toast', cat: 'Groceries' },
+    { text: 'love bonito blazer',   cat: 'Fashion' },
+    { text: 'xiaomi buds',          cat: 'Electronics' },
+  ];
+
+  var searchInput  = document.getElementById('searchInput');
+  var autocompDrop = document.getElementById('autocompleteDrop');
+
+  searchInput.addEventListener('input', function() {
+    var val = this.value.trim().toLowerCase();
+    autocompDrop.innerHTML = '';
+    if (!val) { autocompDrop.classList.remove('open'); return; }
+
+    var matches = suggestions.filter(function(s) { return s.text.toLowerCase().includes(val); }).slice(0, 5);
+    if (!matches.length) { autocompDrop.classList.remove('open'); return; }
+
+    // group by category
+    var grouped = {};
+    matches.forEach(function(s) {
+      if (!grouped[s.cat]) grouped[s.cat] = [];
+      grouped[s.cat].push(s.text);
+    });
+
+    Object.keys(grouped).forEach(function(cat) {
+      var label = document.createElement('div');
+      label.className = 'autocomplete-group-label';
+      label.textContent = cat;
+      autocompDrop.appendChild(label);
+      grouped[cat].forEach(function(text) {
+        var item = document.createElement('div');
+        item.className = 'autocomplete-item';
+        item.setAttribute('role', 'option');
+        item.setAttribute('tabindex', '0');
+        item.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' + text;
+        item.addEventListener('click', function() {
+          searchInput.value = text;
+          autocompDrop.classList.remove('open');
+        });
+        item.addEventListener('keydown', function(e) { if (e.key === 'Enter') item.click(); });
+        autocompDrop.appendChild(item);
+      });
+    });
+    autocompDrop.classList.add('open');
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.header-search')) autocompDrop.classList.remove('open');
+  });
+
+  searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { autocompDrop.classList.remove('open'); this.blur(); }
+  });
+
+  // ── STARS ─────────────────────────────────────────────
+  function starsHtml(rating) {
+    var full = Math.floor(rating);
+    var half = rating % 1 >= 0.5;
+    var s = '';
+    for (var i = 0; i < 5; i++) {
+      s += i < full ? '★' : (i === full && half ? '⯨' : '☆');
+    }
+    return s;
+  }
+
+  // ── TOAST ─────────────────────────────────────────────
+  var toastTimer;
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { t.classList.remove('show'); }, 2200);
+  }
+
+  // ── PRODUCT CARD BUILDER — V2 spec ────────────────────
+  // Structure: image, title (max 2 lines), price, rating, delivery date, Prime, Add to Cart, Buy Now
+  // "Deal ends today" badge (no countdown); delivery BEFORE Prime
+  function makeProductCard(p) {
+    var card = document.createElement('div');
+    card.className = 'prod-card';
+    card.tabIndex = 0;
+    card.setAttribute('role', 'article');
+    card.setAttribute('aria-label', p.title + ', S$' + p.price.toFixed(2));
+    card.dataset.category = p.category || 'all';
+
+    var discountHtml = p.discount
+      ? '<span class="prod-price-orig">S$' + p.orig.toFixed(2) + '</span><span class="prod-discount">-' + p.discount + '%</span>'
+      : '';
+
+    var primeHtml = p.prime
+      ? '<div class="prod-prime"><span style="font-size:0.8rem">✓</span> Free Prime delivery</div>'
+      : '';
+
+    // V2: "Deal ends today" badge (no countdown timer)
+    var dealBadgeHtml = p.deal ? '<span class="deal-badge">Deal ends today</span>' : '';
+
+    card.innerHTML =
+      dealBadgeHtml +
+      '<div class="prod-img" style="background:' + p.bg + ';" role="img" aria-label="' + p.title + ' image">' + p.icon + '</div>' +
+      '<div class="prod-title">' + p.title + '</div>' +
+      '<div class="prod-stars">' +
+        '<span class="stars" aria-label="' + p.rating + ' out of 5 stars">' + starsHtml(p.rating) + '</span>' +
+        '<span class="review-count">(' + p.reviews.toLocaleString() + ')</span>' +
+      '</div>' +
+      '<div class="prod-price-row">' +
+        '<span class="prod-price">S$' + p.price.toFixed(2) + '</span>' + discountHtml +
+      '</div>' +
+      // V2: delivery BEFORE Prime
+      '<div class="prod-delivery">' + p.delivery + '</div>' +
+      primeHtml +
+      '<button class="add-to-cart" aria-label="Add ' + p.title + ' to cart">Add to Cart</button>' +
+      '<button class="buy-now" aria-label="Buy ' + p.title + ' now">Buy Now</button>';
+
+    // Add to Cart logic
+    card.querySelector('.add-to-cart').addEventListener('click', function(e) {
+      e.stopPropagation();
+      this.textContent = '✓ Added';
+      this.classList.add('added');
+      var badge = document.getElementById('cartBadge');
+      if (badge) badge.textContent = parseInt(badge.textContent || 0) + 1;
+      var btn = this;
+      setTimeout(function() { btn.textContent = 'Add to Cart'; btn.classList.remove('added'); }, 1800);
+    });
+
+    // Buy Now — shows toast (visual only)
+    card.querySelector('.buy-now').addEventListener('click', function(e) {
+      e.stopPropagation();
+      showToast('Redirecting to checkout…');
+    });
+
+    // Click opens modal
+    card.addEventListener('click', function(e) {
+      if (e.target.tagName === 'BUTTON') return;
+      openModal(p);
+    });
+    card.addEventListener('keydown', function(e) {
+      if ((e.key === 'Enter' || e.key === ' ') && e.target === card) { e.preventDefault(); openModal(p); }
+    });
+
+    return card;
+  }
+
+  // ── RENDER ────────────────────────────────────────────
+  deals.forEach(function(p) { document.getElementById('scroll-deals').appendChild(makeProductCard(p)); });
+  localBrands.forEach(function(p) { document.getElementById('scroll-local').appendChild(makeProductCard(p)); });
+
+  // ── PRODUCT SCROLL ────────────────────────────────────
+  window.scrollProducts = function(id, dir) {
+    var el = document.getElementById('scroll-' + id);
+    if (el) el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' });
+  };
+
+  // ── PILL FILTERS — V2: unified pill pattern, same behaviour in every section ──
+  function setupPillFilters(wrapperId, scrollId) {
+    var wrap = document.getElementById(wrapperId);
+    if (!wrap) return;
+    wrap.addEventListener('click', function(e) {
+      var pill = e.target.closest('.filter-pill');
+      if (!pill) return;
+      wrap.querySelectorAll('.filter-pill').forEach(function(p) { p.classList.remove('active'); });
+      pill.classList.add('active');
+      var filter = pill.dataset.filter;
+      var scroll = document.getElementById(scrollId);
+      if (!scroll) return;
+      scroll.querySelectorAll('.prod-card').forEach(function(card) {
+        var match = filter === 'all' || card.dataset.category === filter;
+        card.style.display = match ? '' : 'none';
+      });
+    });
+  }
+
+  setupPillFilters('dealFilters', 'scroll-deals');
+  setupPillFilters('localFilters', 'scroll-local');
+
+  // ── ALL CATEGORIES DROPDOWN ───────────────────────────
+  var allCatBtn  = document.getElementById('allCatBtn');
+  var allCatDrop = document.getElementById('allCatDrop');
+  allCatBtn.addEventListener('click', function() {
+    var open = allCatDrop.classList.toggle('open');
+    this.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.all-cat-wrap')) {
+      allCatDrop.classList.remove('open');
+      allCatBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // ── PRODUCT DETAIL MODAL — V2: progressive disclosure ──
+  var currentProduct = null;
+
+  window.openModal = function(p) {
+    currentProduct = p;
+    document.getElementById('modalTitle').textContent = p.title;
+    document.getElementById('modalImg').textContent = p.icon;
+    document.getElementById('modalImg').style.background = p.bg;
+    document.getElementById('modalPrice').textContent = 'S$' + p.price.toFixed(2);
+    document.getElementById('modalOrig').textContent = p.orig ? 'S$' + p.orig.toFixed(2) : '';
+    document.getElementById('modalDiscount').textContent = p.discount ? '-' + p.discount + '%' : '';
+    // V2: delivery before Prime
+    document.getElementById('modalDelivery').textContent = p.delivery;
+    document.getElementById('modalPrime').innerHTML = p.prime ? '✓ Free Prime delivery' : '';
+    document.getElementById('modalStars').textContent = starsHtml(p.rating);
+    document.getElementById('modalStars').setAttribute('aria-label', p.rating + ' out of 5 stars');
+    document.getElementById('modalReviews').textContent = '(' + p.reviews.toLocaleString() + ')';
+    document.getElementById('modalBrand').textContent = p.brand;
+
+    // Reset disclosure
+    document.getElementById('modalFullDetails').classList.remove('open');
+    document.getElementById('detailsToggle').setAttribute('aria-expanded', 'false');
+    document.getElementById('detailsToggle').querySelector('#toggleChevron').setAttribute('points', '6 9 12 15 18 9');
+
+    // Reset add to cart button
+    var addBtn = document.getElementById('modalAddCart');
+    addBtn.textContent = 'Add to Cart';
+    addBtn.classList.remove('added');
+
+    document.getElementById('prod-modal').classList.add('open');
+    document.getElementById('modalAddCart').focus();
+  };
+
+  window.closeModal = function() {
+    document.getElementById('prod-modal').classList.remove('open');
+    currentProduct = null;
+  };
+
+  window.toggleDetails = function() {
+    var details = document.getElementById('modalFullDetails');
+    var toggle  = document.getElementById('detailsToggle');
+    var chevron = document.getElementById('toggleChevron');
+    var open = details.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    chevron.setAttribute('points', open ? '6 15 12 9 18 15' : '6 9 12 15 18 9');
+    toggle.querySelector('span') && (toggle.querySelector('span').textContent = open ? 'Hide details' : 'See full details');
+    // Update text node
+    toggle.childNodes.forEach(function(n) { if (n.nodeType === 3) n.textContent = open ? ' Hide details' : ' See full details'; });
+  };
+
+  document.getElementById('modalAddCart').addEventListener('click', function() {
+    this.textContent = '✓ Added';
+    this.classList.add('added');
+    var badge = document.getElementById('cartBadge');
+    if (badge) badge.textContent = parseInt(badge.textContent || 0) + 1;
+    var btn = this;
+    setTimeout(function() { btn.textContent = 'Add to Cart'; btn.classList.remove('added'); }, 1800);
+  });
+
+  document.getElementById('modalBuyNow').addEventListener('click', function() {
+    closeModal();
+    showToast('Redirecting to checkout…');
+  });
+
+  document.getElementById('prod-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // ── HERO TILE KEYBOARD ────────────────────────────────
+  document.querySelectorAll('.hero-tile').forEach(function(tile) {
+    tile.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') tile.click(); });
+  });
+
+  // ── SEARCH RESULTS ────────────────────────────────────
+  var DELL_RESULTS = [
+    { id:1, title:'Dell 27" FHD IPS Monitor — D2723H',           price:299,  rating:4.1, reviews:892,  brand:'Dell',    size:'27"', priceRange:'under300', resolution:'FHD', delivery:'Get it tomorrow',      prime:true  },
+    { id:2, title:'Dell 27" QHD USB-C Monitor — S2722QC',        price:459,  rating:4.2, reviews:1247, brand:'Dell',    size:'27"', priceRange:'300-500',  resolution:'QHD', delivery:'Get it by Friday',      prime:true  },
+    { id:3, title:'Dell 27" 4K UHD USB-C Hub Monitor — P2723QE', price:539,  rating:4.4, reviews:634,  brand:'Dell',    size:'27"', priceRange:'500plus',  resolution:'4K',  delivery:'Get it tomorrow',      prime:true  },
+    { id:4, title:'Samsung 27" QHD Curved Monitor — C27G55T',    price:379,  rating:4.3, reviews:2105, brand:'Samsung', size:'27"', priceRange:'300-500',  resolution:'QHD', delivery:'Get it by Saturday',   prime:true  },
+    { id:5, title:'LG 27" 4K IPS Monitor with USB-C — 27UK850',  price:479,  rating:4.5, reviews:3480, brand:'LG',      size:'27"', priceRange:'300-500',  resolution:'4K',  delivery:'Get it tomorrow',      prime:true  },
+    { id:6, title:'HP 27" FHD IPS Monitor — E27 G5',             price:489,  rating:4.0, reviews:445,  brand:'HP',      size:'27"', priceRange:'300-500',  resolution:'FHD', delivery:'Get it in 2 days',     prime:false },
+  ];
+
+  // Active filters state
+  var srFilters = { brand:'All', size:'All', price:'All', resolution:'All' };
+  var srSort    = 'Relevance';
+  var srQuery   = '';
+
+  // Filter definitions — pills alphabetically within each group (All first)
+  var SR_FILTER_DEFS = [
+    { key:'brand',      label:'Brand',      options:['All','Dell','HP','LG','Samsung']              },
+    { key:'size',       label:'Size',       options:['24"','27"','32"','All']                       },
+    { key:'price',      label:'Price',      options:['All','S$300–S$500','S$500+','Under S$300']    },
+    { key:'resolution', label:'Resolution', options:['4K','All','FHD','QHD']                        },
+  ];
+  var SR_SORT_OPTIONS = ['Avg. Rating','Price: High to Low','Price: Low to High','Relevance'];
+
+  function starsHtmlSR(r) {
+    var s = ''; for (var i=0;i<5;i++) s += i < Math.floor(r) ? '★' : (i===Math.floor(r)&&r%1>=0.5?'⯨':'☆'); return s;
+  }
+
+  function buildSRCard(p) {
+    var card = document.createElement('div');
+    card.className = 'sr-card';
+    card.dataset.brand = p.brand;
+    card.dataset.size  = p.size;
+    card.dataset.price = p.priceRange;
+    card.dataset.resolution = p.resolution;
+    card.dataset.priceVal = p.price;
+    card.dataset.rating   = p.rating;
+    card.setAttribute('tabindex','0');
+
+    var bgMap = {Dell:'#f0f4ff', Samsung:'#fff0f0', LG:'#f0fff0', HP:'#fff8f0'};
+    var bg = bgMap[p.brand] || '#f0f4ff';
+
+    card.innerHTML =
+      '<div class="sr-card-img" style="background:' + bg + ';">' +
+        '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#b0b8c8" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>' +
+        '<span class="sr-card-img-label">' + p.brand + ' · ' + p.resolution + '</span>' +
+      '</div>' +
+      '<div class="sr-card-title">' + p.title + '</div>' +
+      '<div class="sr-card-stars"><span class="stars" aria-label="' + p.rating + ' out of 5">' + starsHtmlSR(p.rating) + '</span><span style="font-size:0.7rem;color:#007185;">(' + p.reviews.toLocaleString() + ')</span></div>' +
+      '<div class="sr-card-price">S$' + p.price.toFixed(2) + '</div>' +
+      '<div class="sr-card-delivery">' + p.delivery + '</div>' +
+      (p.prime ? '<div class="sr-card-prime">✓ Free Prime delivery</div>' : '') +
+      '<button class="sr-add-to-cart" aria-label="Add ' + p.title + ' to cart">Add to Cart</button>' +
+      '<button class="sr-buy-now" aria-label="Buy ' + p.title + ' now">Buy Now</button>';
+
+    card.querySelector('.sr-add-to-cart').addEventListener('click', function(e) {
+      e.stopPropagation();
+      this.textContent = '✓ Added'; this.classList.add('added');
+      var badge = document.getElementById('cartBadge');
+      if (badge) badge.textContent = parseInt(badge.textContent||0)+1;
+      var btn = this;
+      setTimeout(function() { btn.textContent='Add to Cart'; btn.classList.remove('added'); }, 1800);
+    });
+    card.querySelector('.sr-buy-now').addEventListener('click', function(e) {
+      e.stopPropagation(); showToast('Redirecting to checkout\u2026');
+    });
+    return card;
+  }
+
+  function renderSRFilters() {
+    var wrap = document.getElementById('srFiltersWrap');
+    wrap.innerHTML = '';
+    SR_FILTER_DEFS.forEach(function(def) {
+      var group = document.createElement('div');
+      group.className = 'sr-filter-group';
+      var lbl = document.createElement('span');
+      lbl.className = 'sr-filter-group-label';
+      lbl.textContent = def.label + ':';
+      group.appendChild(lbl);
+      def.options.forEach(function(opt) {
+        var pill = document.createElement('button');
+        pill.className = 'filter-pill' + (srFilters[def.key] === opt ? ' active' : '');
+        pill.textContent = opt;
+        pill.addEventListener('click', function() {
+          srFilters[def.key] = opt;
+          group.querySelectorAll('.filter-pill').forEach(function(p) { p.classList.remove('active'); });
+          pill.classList.add('active');
+          applySRFilters();
+        });
+        group.appendChild(pill);
+      });
+      wrap.appendChild(group);
+    });
+  }
+
+  function renderSRSort() {
+    var wrap = document.getElementById('srSortWrap');
+    wrap.innerHTML = '';
+    var lbl = document.createElement('span');
+    lbl.className = 'sr-sort-label';
+    lbl.textContent = 'Sort by:';
+    wrap.appendChild(lbl);
+    SR_SORT_OPTIONS.forEach(function(opt) {
+      var pill = document.createElement('button');
+      pill.className = 'filter-pill' + (srSort === opt ? ' active' : '');
+      pill.textContent = opt;
+      pill.addEventListener('click', function() {
+        srSort = opt;
+        wrap.querySelectorAll('.filter-pill').forEach(function(p) { p.classList.remove('active'); });
+        pill.classList.add('active');
+        applySRSort();
+      });
+      wrap.appendChild(pill);
+    });
+  }
+
+  function applySRFilters() {
+    var cards = document.querySelectorAll('#srGrid .sr-card');
+    var visible = 0;
+    cards.forEach(function(card) {
+      var match =
+        (srFilters.brand      === 'All' || card.dataset.brand === srFilters.brand) &&
+        (srFilters.size       === 'All' || card.dataset.size  === srFilters.size)  &&
+        (srFilters.resolution === 'All' || card.dataset.resolution === srFilters.resolution) &&
+        matchesPriceFilter(card, srFilters.price);
+      card.classList.toggle('hidden', !match);
+      if (match) visible++;
+    });
+    document.getElementById('srCountNum').textContent = visible;
+    var noRes = document.getElementById('srNoResults');
+    if (noRes) noRes.classList.toggle('show', visible === 0);
+  }
+
+  function matchesPriceFilter(card, priceFilter) {
+    if (priceFilter === 'All') return true;
+    var p = parseFloat(card.dataset.priceVal);
+    if (priceFilter === 'Under S$300')   return p < 300;
+    if (priceFilter === 'S$300\u2013S$500') return p >= 300 && p <= 500;
+    if (priceFilter === 'S$500+')        return p > 500;
+    return true;
+  }
+
+  function applySRSort() {
+    var grid = document.getElementById('srGrid');
+    var cards = Array.from(grid.querySelectorAll('.sr-card'));
+    cards.sort(function(a,b) {
+      if (srSort === 'Price: Low to High')  return parseFloat(a.dataset.priceVal) - parseFloat(b.dataset.priceVal);
+      if (srSort === 'Price: High to Low')  return parseFloat(b.dataset.priceVal) - parseFloat(a.dataset.priceVal);
+      if (srSort === 'Avg. Rating')          return parseFloat(b.dataset.rating)   - parseFloat(a.dataset.rating);
+      return 0; // Relevance = original order
+    });
+    cards.forEach(function(c) { grid.appendChild(c); });
+  }
+
+  function showSearchResults(query) {
+    srQuery = query;
+    srFilters = { brand:'All', size:'All', price:'All', resolution:'All' };
+    srSort = 'Relevance';
+    document.getElementById('srQueryLabel').textContent = '"' + query + '"';
+    document.getElementById('srCountNum').textContent   = DELL_RESULTS.length;
+    // Build grid
+    var grid = document.getElementById('srGrid');
+    grid.innerHTML = '';
+    DELL_RESULTS.forEach(function(p) { grid.appendChild(buildSRCard(p)); });
+    // Build filters and sort
+    renderSRFilters();
+    renderSRSort();
+    // Show results page, hide main
+    document.querySelector('main').style.display = 'none';
+    document.getElementById('searchResultsPage').classList.add('open');
+    window.scrollTo(0,0);
+  }
+
+  window.closeSearchResults = function() {
+    document.querySelector('main').style.display = '';
+    document.getElementById('searchResultsPage').classList.remove('open');
+    document.getElementById('searchInput').value = '';
+    autocompDrop.classList.remove('open');
+  };
+
+  // Wire search input and button
+  searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      var q = this.value.trim();
+      if (q) { showSearchResults(q); autocompDrop.classList.remove('open'); }
+    }
+  });
+  document.getElementById('headerSearchBtn').addEventListener('click', function() {
+    var q = searchInput.value.trim();
+    if (q) { showSearchResults(q); autocompDrop.classList.remove('open'); }
+  });
+  // Also trigger on autocomplete item select
+  autocompDrop.addEventListener('click', function(e) {
+    var item = e.target.closest('.autocomplete-item');
+    if (item) { setTimeout(function() { showSearchResults(searchInput.value); }, 50); }
+  });
+
+})();
+</script>
+
+<script>
+  window.disqusPageConfig = {
+    identifier: 'amazon-sg-v2',
+    url: 'https://usability-testing.pages.dev/amazon-sg-v2',
+    title: 'Amazon Singapore V2 Revised'
+  };
+</script>
+<script src="shared/disqus-config.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+======================================================================
+CLUSTER 0  ·  paste into stitch.withgoogle.com
+======================================================================
+
+You are designing a redesigned booking flow with clearer user control, undo options, and flexible date/destination selection for Singapore Airlines
+
+━━━ PAIN POINT (validated from 10 interview quotes) ━━━
+SIA: Users do not have freedom and control in terms of the landing page as well as booking process.
+
+━━━ USER VOICE — top-cosine verbatim from the interview cluster ━━━
+- "User control and freedom - unable to change destination country"  (Haneeza Said)
+- "Keziah: 
+- User control and freedom unable to change the date selection 
+- Error prevention: Unable to choose multi-cities in the first place 
+- Help and documentation: there are no help documents for users to find FAQs"  (Keziah Vickraman)
+- "Lack of user control and freedom - can&#x27;t undo selection of country"  (JY Tan)
+
+━━━ PERSONA ━━━
+a busy knowledge worker juggling multiple projects
+
+━━━ PLATFORM + CONSTRAINTS ━━━
+Platform:          mobile (iOS + Android)
+Accessibility:     WCAG 2.2 AA
+Brand tone:        calm, focused, minimal
+
+Must include:
+- clear primary action button
+- descriptive empty state
+- non-modal error handling
+
+━━━ STYLE + COGNITIVE-SCIENCE DIRECTION ━━━
+- Keep the primary path to resolving the pain point within 2 taps (Fitts's Law — minimize distance × width).
+- Cap simultaneous choices on any screen at 5 (Miller's Law — 7 ± 2, chunk aggressively).
+- Use progressive disclosure for secondary actions (Hick's Law — decision time scales with log of choices).
+- Design the empty, loading, and error states alongside the happy path.
+
+━━━ OUTPUT FORMAT ━━━
+Return: (1) high-fidelity mobile screen, (2) 2-sentence rationale explaining
+how each pain-point quote above is addressed, (3) list of 2-3 alternative
+variants I can A/B test.
+
+
+======================================================================
+CLUSTER 1  ·  paste into stitch.withgoogle.com
+======================================================================
+
+You are designing a redesigned Netflix browse UI with explicit loading states, progress indicators, and clearer playback feedback for Netflix SG.
+
+━━━ PAIN POINT (validated from 1 interview quotes) ━━━
+Netflix: Users do not have visibility of system status.
+
+━━━ USER VOICE — top-cosine verbatim from the interview cluster ━━━
+- "The size of the thumbnails are not consistent across different sections."  (Stephen Wang)
+
+━━━ PERSONA ━━━
+a busy knowledge worker juggling multiple projects
+
+━━━ PLATFORM + CONSTRAINTS ━━━
+Platform:          mobile (iOS + Android)
+Accessibility:     WCAG 2.2 AA
+Brand tone:        calm, focused, minimal
+
+Must include:
+- clear primary action button
+- descriptive empty state
+- non-modal error handling
+
+━━━ STYLE + COGNITIVE-SCIENCE DIRECTION ━━━
+- Keep the primary path to resolving the pain point within 2 taps (Fitts's Law — minimize distance × width).
+- Cap simultaneous choices on any screen at 5 (Miller's Law — 7 ± 2, chunk aggressively).
+- Use progressive disclosure for secondary actions (Hick's Law — decision time scales with log of choices).
+- Design the empty, loading, and error states alongside the happy path.
+
+━━━ OUTPUT FORMAT ━━━
+Return: (1) high-fidelity mobile screen, (2) 2-sentence rationale explaining
+how each pain-point quote above is addressed, (3) list of 2-3 alternative
+variants I can A/B test.
+
+
+======================================================================
+CLUSTER 2  ·  paste into stitch.withgoogle.com
+======================================================================
+
+You are designing a redesigned Amazon SG homepage with decluttered layout, consistent filter patterns, and cleaner visual hierarchy for Amazon SG.
+
+━━━ PAIN POINT (validated from 5 interview quotes) ━━━
+Amazon SG: Too much clutter with inconsistent filters; aesthetic and minimalist design is lacking.
+
+━━━ USER VOICE — top-cosine verbatim from the interview cluster ━━━
+- "<b>Aesthetic and minimalist design </b>
+❌ Too much spacing between &#x27;Flying from&#x27; &amp; &#x27;Flying to&#x27; (waste of real estate)
+❌ Segmented controls - grey is too light, might be an issue for users with visual disabilities 
+❌ &#x27;Krisflyer Miles&#x27; tag in banner looks like a button, might confuse user
+
+<b>Match between system and the real world</b>
+❌ Direction of swap icon does not reflect the placement of &#x27;Flying from&#x27; &amp; &#x27;Flying to&#x27;
+
+<b>Flexibility and Efficiency of Use</b>
+❌Drop-down list - design causes user to scroll down as they would assume there are more options available
+✅ When user selects destination in &#x27;Fly somewhere extraordinary&#x27; section, it will auto fill the destination for user 
+
+<b>Error Prevention</b>
+❌ Allows user to select a departure date that is earlier than the return date 
+❌ One-way selection - still allows user to enter a return date"  (Rui)
+- "Aesthetic minimalism
+Reduce number of choices for Fly somewhere extraordinary
+
+Consistency &amp; standards
+No return date selection for multi-city"  (Chap Heng)
+- "Able to perform search flights with return date earlier than departure date - error prevention"  (CT)
+
+━━━ PERSONA ━━━
+a busy knowledge worker juggling multiple projects
+
+━━━ PLATFORM + CONSTRAINTS ━━━
+Platform:          mobile (iOS + Android)
+Accessibility:     WCAG 2.2 AA
+Brand tone:        calm, focused, minimal
+
+Must include:
+- clear primary action button
+- descriptive empty state
+- non-modal error handling
+
+━━━ STYLE + COGNITIVE-SCIENCE DIRECTION ━━━
+- Keep the primary path to resolving the pain point within 2 taps (Fitts's Law — minimize distance × width).
+- Cap simultaneous choices on any screen at 5 (Miller's Law — 7 ± 2, chunk aggressively).
+- Use progressive disclosure for secondary actions (Hick's Law — decision time scales with log of choices).
+- Design the empty, loading, and error states alongside the happy path.
+
+━━━ OUTPUT FORMAT ━━━
+Return: (1) high-fidelity mobile screen, (2) 2-sentence rationale explaining
+how each pain-point quote above is addressed, (3) list of 2-3 alternative
+variants I can A/B test.
+
+
+======================================================================
+CLUSTER 3  ·  paste into stitch.withgoogle.com
+======================================================================
+
+You are designing a screen that solves the pain point: (TODO · hand-label cluster 3 after reading § 5) for SIA, Netflix and Amazong SG.
+
+━━━ PAIN POINT (validated from 11 interview quotes) ━━━
+(TODO · hand-label cluster 3 after reading § 5)
+
+━━━ USER VOICE — top-cosine verbatim from the interview cluster ━━━
+- "- <b>Recognition rather than recall:</b> The tags with &quot;#2 in Singapore today&quot; ensures that the user does not have to remember information from one part of the interface (the &#x27;Trending in Singapore &#x27;section) to another.
+- <b>Match between system and real world:</b> &quot;More info&quot; icon should have the (i) (i.e., the &quot;i&quot; in a circle) instead of just a dot in the circle
+- <b>Aesthetic and minimalist design</b>: The emojis in each thumbnail nicely match the storyline of the show (e.g., scales of justice for &quot;Juvenile Justice&quot; and joker card for &quot;Alice in Borderland&quot;)
+- <b>Flexibility &amp; efficiency of use:</b> Would be more efficient if &quot;Top Picks for You&quot; was above &quot;Trending in Singapore&quot; and &quot;Because You Watched&quot; given that it should be ordered based on relevance to the user"  (Farah)
+- "&quot;Join Krisflyer Free&quot; and &quot;Explore Benefits&quot; buttons does not work"  (char)
+- "- Product information shown: Concise and highlights key information to consumers (product, brand, reviews, price and delivery)
+- Order of information shown: To show when consumers they can get the item before &quot;Free Prime Delivery&quot; since &quot;Free Prime Delivery&quot; is not always provided.
+- Categories: Too repetitive as consumers can select from the top search bar, left side bar and &quot;shop by category&quot;"  (En Lin Choo)
+
+━━━ PERSONA ━━━
+a busy knowledge worker juggling multiple projects
+
+━━━ PLATFORM + CONSTRAINTS ━━━
+Platform:          mobile (iOS + Android)
+Accessibility:     WCAG 2.2 AA
+Brand tone:        calm, focused, minimal
+
+Must include:
+- clear primary action button
+- descriptive empty state
+- non-modal error handling
+
+━━━ STYLE + COGNITIVE-SCIENCE DIRECTION ━━━
+- Keep the primary path to resolving the pain point within 2 taps (Fitts's Law — minimize distance × width).
+- Cap simultaneous choices on any screen at 5 (Miller's Law — 7 ± 2, chunk aggressively).
+- Use progressive disclosure for secondary actions (Hick's Law — decision time scales with log of choices).
+- Design the empty, loading, and error states alongside the happy path.
+
+━━━ OUTPUT FORMAT ━━━
+Return: (1) high-fidelity mobile screen, (2) 2-sentence rationale explaining
+how each pain-point quote above is addressed, (3) list of 2-3 alternative
+variants I can A/B test.
+
+
