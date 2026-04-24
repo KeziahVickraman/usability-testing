@@ -257,24 +257,7 @@
     .hero-tile-cta { font-size: 0.75rem; font-weight: 600; color: var(--orange); }
 
     /* ── MAIN CONTENT ── */
-    main { max-width: 1440px; margin: 0 auto; padding: 1rem 1rem; display: flex; gap: 2rem; }
-    .main-sidebar { flex: 0 0 280px; }
-    .main-content { flex: 1; }
-
-    /* ── SIDEBAR FILTERS ── */
-    .sidebar-filters {
-      background: var(--white); border-radius: var(--radius);
-      padding: 1.25rem; box-shadow: var(--shadow); position: sticky; top: 1rem;
-    }
-    .sidebar-title {
-      font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 1rem;
-      border-bottom: 1px solid var(--border2); padding-bottom: 0.5rem;
-    }
-    .filter-group { margin-bottom: 1.5rem; }
-    .filter-group:last-child { margin-bottom: 0; }
-    .filter-group-title {
-      font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem;
-    }
+    main { max-width: 1440px; margin: 0 auto; padding: 1rem 1rem; }
 
     /* ── FILTER PILLS — V2: unified pill-only filter pattern ── */
     .filter-pills-wrap {
@@ -491,12 +474,15 @@
     .sr-count { font-size: 0.78rem; color: var(--muted); margin-left: auto; white-space: nowrap; }
     .sr-count strong { color: var(--text); }
     .sr-filters-wrap { max-width: 1440px; margin: 0 auto; padding: 0.75rem 1rem 0; }
+    .sr-main { max-width: 1440px; margin: 0 auto; padding: 0 1rem; display: flex; gap: 2rem; }
+    .sr-sidebar { flex: 0 0 280px; }
+    .sr-content { flex: 1; }
     .sr-filter-group { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
     .sr-filter-group-label { font-size: 0.7rem; font-weight: 700; color: var(--muted); min-width: 80px; flex-shrink: 0; text-transform: uppercase; letter-spacing: 0.06em; }
-    .sr-sort-wrap { max-width: 1440px; margin: 0 auto; padding: 0.5rem 1rem 0.75rem; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; border-bottom: 1px solid var(--border2); }
+    .sr-sort-wrap { padding: 0.5rem 0 0.75rem; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; border-bottom: 1px solid var(--border2); }
     .sr-sort-label { font-size: 0.7rem; font-weight: 700; color: var(--muted); flex-shrink: 0; text-transform: uppercase; letter-spacing: 0.06em; }
     /* Reuse filter-pill for search result filters */
-    .sr-results-wrap { max-width: 1440px; margin: 0 auto; padding: 1rem 1rem 2rem; }
+    .sr-results-wrap { padding: 1rem 0 2rem; }
     .sr-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -589,9 +575,8 @@
       .header-actions { order: 5; gap: 0; }
       .hero-section { grid-template-columns: 1fr; max-height: none; }
       .hero-tiles { flex-direction: row; }
-      main { flex-direction: column; gap: 1rem; }
-      .main-sidebar { flex: none; order: 2; }
-      .sidebar-filters { position: static; }
+      .sr-main { flex-direction: column; gap: 1rem; }
+      .sr-sidebar { flex: none; order: 2; }
       .footer-cols { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 600px) {
@@ -737,37 +722,20 @@
 
 <!-- MAIN -->
 <main>
-  <div class="main-sidebar">
-    <!-- Filters moved to sidebar -->
-    <div class="sidebar-filters">
-      <h3 class="sidebar-title">Filters</h3>
-      <div class="filter-group">
-        <h4 class="filter-group-title">Deals of the Day</h4>
-        <div class="filter-pills-wrap" id="dealFilters">
-          <button class="filter-pill active" data-filter="all">All</button>
-          <button class="filter-pill" data-filter="electronics">Electronics</button>
-          <button class="filter-pill" data-filter="home">Home</button>
-          <button class="filter-pill" data-filter="health">Health</button>
-        </div>
-      </div>
-      <div class="filter-group">
-        <h4 class="filter-group-title">Local Brands</h4>
-        <div class="filter-pills-wrap" id="localFilters">
-          <button class="filter-pill active" data-filter="all">All</button>
-          <button class="filter-pill" data-filter="food">Food</button>
-          <button class="filter-pill" data-filter="beauty">Beauty</button>
-          <button class="filter-pill" data-filter="fashion">Fashion</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="main-content">
 
   <!-- Deals of the Day — V2: 4 cards max, unified pill filters, no countdown timers -->
   <div class="product-section">
     <div class="section-header">
       <h2>Deals of the Day</h2>
       <a href="#" class="section-see-more">See all deals &rarr;</a>
+    </div>
+    <!-- V2: pill-only filter, consistent across all sections -->
+    <div class="filter-pills-wrap" id="dealFilters">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-pill active" data-filter="all">All</button>
+      <button class="filter-pill" data-filter="electronics">Electronics</button>
+      <button class="filter-pill" data-filter="home">Home</button>
+      <button class="filter-pill" data-filter="health">Health</button>
     </div>
     <div class="product-scroll-wrap">
       <button class="prod-arrow left" aria-label="Scroll left" onclick="scrollProducts('deals', -1)">&#8249;</button>
@@ -782,12 +750,18 @@
       <h2>Local Brands We Love</h2>
       <a href="#" class="section-see-more">Explore local brands &rarr;</a>
     </div>
+    <div class="filter-pills-wrap" id="localFilters">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-pill active" data-filter="all">All</button>
+      <button class="filter-pill" data-filter="food">Food</button>
+      <button class="filter-pill" data-filter="beauty">Beauty</button>
+      <button class="filter-pill" data-filter="fashion">Fashion</button>
+    </div>
     <div class="product-scroll-wrap">
       <button class="prod-arrow left" aria-label="Scroll left" onclick="scrollProducts('local', -1)">&#8249;</button>
       <div class="product-scroll" id="scroll-local"></div>
       <button class="prod-arrow right" aria-label="Scroll right" onclick="scrollProducts('local', 1)">&#8250;</button>
     </div>
-  </div>
   </div>
 
   <!-- Disqus -->
@@ -809,17 +783,21 @@
     <span class="sr-count" id="srCount"><strong id="srCountNum">6</strong> results</span>
   </div>
 
-  <div class="sr-filters-wrap" id="srFiltersWrap">
-    <!-- Filter groups injected by JS -->
-  </div>
-
-  <div class="sr-sort-wrap" id="srSortWrap">
-    <!-- Sort pills injected by JS -->
-  </div>
-
-  <div class="sr-results-wrap">
-    <div class="sr-grid" id="srGrid"></div>
-    <div class="sr-no-results" id="srNoResults">No results match the selected filters. Try clearing one or more filters.</div>
+  <div class="sr-main">
+    <div class="sr-sidebar">
+      <div class="sr-filters-wrap" id="srFiltersWrap">
+        <!-- Filter groups injected by JS -->
+      </div>
+    </div>
+    <div class="sr-content">
+      <div class="sr-sort-wrap" id="srSortWrap">
+        <!-- Sort pills injected by JS -->
+      </div>
+      <div class="sr-results-wrap">
+        <div class="sr-grid" id="srGrid"></div>
+        <div class="sr-no-results" id="srNoResults">No results match the selected filters. Try clearing one or more filters.</div>
+      </div>
+    </div>
   </div>
 </div>
 
