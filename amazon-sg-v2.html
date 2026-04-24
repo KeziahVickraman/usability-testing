@@ -877,8 +877,8 @@
       </div>
       <!-- V2: Add to Cart and Buy Now first, specs behind "See full details" -->
       <div class="modal-actions">
-        <button class="modal-add-to-cart" id="modalAddCart">Add to Cart</button>
         <button class="modal-buy-now" id="modalBuyNow">Buy Now</button>
+        <button class="modal-add-to-cart" id="modalAddCart">Add to Cart</button>
       </div>
       <button class="modal-details-toggle" id="detailsToggle" aria-expanded="false" onclick="toggleDetails()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9" id="toggleChevron"/></svg>
@@ -997,7 +997,7 @@
   }
 
   // ── PRODUCT CARD BUILDER — V2 spec ────────────────────
-  // Structure: image, title (max 2 lines), price, rating, delivery date, Prime, Add to Cart, Buy Now
+  // Structure: image, title (max 2 lines), price, rating, delivery date, Prime, Buy Now, Add to Cart
   // "Deal ends today" badge (no countdown); delivery BEFORE Prime
   function makeProductCard(p) {
     var card = document.createElement('div');
@@ -1032,8 +1032,8 @@
       // V2: delivery BEFORE Prime
       '<div class="prod-delivery">' + p.delivery + '</div>' +
       primeHtml +
-      '<button class="add-to-cart" aria-label="Add ' + p.title + ' to cart">Add to Cart</button>' +
-      '<button class="buy-now" aria-label="Buy ' + p.title + ' now">Buy Now</button>';
+      '<button class="buy-now" aria-label="Buy ' + p.title + ' now">Buy Now</button>' +
+      '<button class="add-to-cart" aria-label="Add ' + p.title + ' to cart">Add to Cart</button>';
 
     // Add to Cart logic
     card.querySelector('.add-to-cart').addEventListener('click', function(e) {
@@ -1239,8 +1239,8 @@
       '<div class="sr-card-price">S$' + p.price.toFixed(2) + '</div>' +
       '<div class="sr-card-delivery">' + p.delivery + '</div>' +
       (p.prime ? '<div class="sr-card-prime">✓ Free Prime delivery</div>' : '') +
-      '<button class="sr-add-to-cart" aria-label="Add ' + p.title + ' to cart">Add to Cart</button>' +
-      '<button class="sr-buy-now" aria-label="Buy ' + p.title + ' now">Buy Now</button>';
+      '<button class="sr-buy-now" aria-label="Buy ' + p.title + ' now">Buy Now</button>' +
+      '<button class="sr-add-to-cart" aria-label="Add ' + p.title + ' to cart">Add to Cart</button>';
 
     card.querySelector('.sr-add-to-cart').addEventListener('click', function(e) {
       e.stopPropagation();
